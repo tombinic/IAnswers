@@ -1,0 +1,44 @@
+{
+  "name": "chat_application",
+  "version": "1.0.0",
+  "description": "A chat application similar to Slack",
+  "dependencies": {
+    "@tensorflow-models/qna": "^1.0.1",
+    "@tensorflow/tfjs": "^3.15.0",
+    "@tensorflow/tfjs-backend-cpu": "^3.15.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.15.0",
+    "@tensorflow/tfjs-converter": "^3.15.0",
+    "@tensorflow/tfjs-core": "^3.15.0",
+    "@tensorflow/tfjs-node": "^3.15.0",
+    "body-parser": "1.18.2",
+    "connect-mongodb-session": "^3.1.1",
+    "express": "^4.16.3",
+    "express-session": "1.15.6",
+    "mongodb": "^3.7.3",
+    "mongoose": "5.1.0",
+    "os": "^0.1.2",
+    "socket.io": "2.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "3.5.0"
+  },
+  "scripts": {
+    "start": "concurrently \"node server.js\" \"cd client && npm start\" \"mongod --quiet\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pransh",
+  "license": "ISC",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyctophiliacme/Chat-App.git"
+  },
+  "keywords": [
+    "Chat-App",
+    "Slack"
+  ],
+  "bugs": {
+    "url": "https://github.com/nyctophiliacme/Chat-App/issues"
+  },
+  "homepage": "https://github.com/nyctophiliacme/Chat-App#readme"
+}
