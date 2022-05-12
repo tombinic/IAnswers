@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect} from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -30,19 +30,23 @@ import MDBox from "components/MDBox";
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import SignIn from "layouts/authentication/sign-in";
+import Dashboard from "layouts/dashboard";
+import SignUp from "layouts/authentication/sign-up";
+import Profile from "layouts/profile";
+import Tables from "layouts/tables";
+
+// ToDo - togliere
+import Logout from "layouts/authentication/logout";
+
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
-import themeRTL from "assets/theme/theme-rtl";
+
 
 // Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
-import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
-// RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
+
 
 // Material Dashboard 2 React routes
 import routes from "routes";
@@ -53,6 +57,8 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+
+// COntext
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -67,19 +73,16 @@ export default function App() {
     darkMode,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
+  const infos = JSON.parse(localStorage.getItem('auth'));
+
+  const [auth, setAuth] = useState({success: (infos==null)?false:infos.success, 
+                                    email : (infos==null)?"":infos.email,
+                                    name: (infos==null)?"":infos.name,
+                                    surname:(infos==null)?"":infos.surname
+                                  });
   const { pathname } = useLocation();
 
-  // Cache for the rtl
-  useMemo(() => {
-    const cacheRtl = createCache({
-      key: "rtl",
-      stylisPlugins: [rtlPlugin],
-    });
 
-    setRtlCache(cacheRtl);
-  }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -111,18 +114,33 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
-  const getRoutes = (allRoutes) => {
-    if(!loggedIn) {
-      return <Route path="*" element={<SignIn />}  key="sign-in" />
+
+  // Function called to force route to SignIn in case of not precedent logIn
+  const isLoggedin = () => {
+
+    if(!auth.success){
+     
+
+      return (
+      <Routes>
+        <Route exact path="/authentication/sign-in" element={<SignIn setAuth={setAuth}/>}></Route>
+        <Route exact path="/authentication/sign-up" element={<SignUp setAuth={setAuth} />}></Route>
+        <Route  path="*"  element={<Navigate  to="/authentication/sign-in" />}></Route>
+      </Routes>
+      )
+    }else{
+      console.log(auth);
+      return(
+        <Routes>
+        <Route exact path="/dashboard" element={ <Dashboard />}></Route>
+        <Route exact path="/profile" element={<Profile auth={auth}/>}></Route>
+        <Route exact path="/logout" element={ <Logout setAuth={setAuth} />}></Route>
+        <Route exact path="/tables" element={ <Tables />}></Route>
+        <Route path="*" element={<Navigate  to="/dashboard" />}></Route>
+        </Routes>
+      )
     }
-    allRoutes.map((route) => {
-
-      if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
-      }
-
-      return null;
-    })};
+  }
 
   const configsButton = (
     <MDBox
@@ -148,32 +166,7 @@ export default function App() {
     </MDBox>
   );
 
-  return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
+  return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
       {layout === "dashboard" && (
@@ -181,20 +174,20 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 2"
+            brandName="IAnswers"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
           <Configurator />
           {configsButton}
+          
         </>
       )}
       {layout === "vr" && <Configurator />}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
+      {isLoggedin()}
+
+     
     </ThemeProvider>
   );
 }

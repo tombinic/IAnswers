@@ -13,10 +13,11 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState,createContext, useContext, forwardRef} from "react";
 import { sha3_512 } from 'js-sha3';
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link , Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -41,28 +42,68 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
-function Basic() {
+
+
+
+const Basic = forwardRef(( { setAuth }, ref) => {
+  const navigate = useNavigate();
+
   const [rememberMe, setRememberMe] = useState(false);
   const [pw, setPw] = useState(null);
   const [email, setEmail] = useState(null);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  
 
   const handleOnLogin = (e) => {
     let hash =  sha3_512(pw);
-    alert(hash);
+
+    e.preventDefault();
+    fetch('http://localhost:3005/login',
+      {
+         headers: {
+           'Accept': 'application/json',
+           'Content-Type': 'application/json',
+         },
+         method: 'POST',
+         credentials: 'same-origin',
+         body: JSON.stringify({email: email, password: hash})
+         //JSON.stringify({ fields })
+      })
+      .then((response) => response.text())
+      .then((responseText) => {
+        responseText = JSON.parse(responseText);
+        if(responseText.message === "Successful")
+        {
+          var infos = {success : true, email : responseText.email , name : responseText.name , surname : responseText.surname};
+          localStorage.setItem('auth', JSON.stringify(infos));
+          //navigate("/dashboard")
+          setAuth({infos});
+        }
+        else
+        {
+          alert("credenziali errate");
+        }
+      })
+      .catch((error) => {
+          console.error("Error in login API: " + error);
+      });
   };
 
   const handleEmailChange = (e) => {
-    setPw(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
     setEmail(e.target.value);
   };
 
+  const handlePasswordChange = (e) => {
+    setPw(e.target.value);
+  };
+
+
+
   return (
+
     <BasicLayout image={bgImage}>
+      
       <Card>
         <MDBox
           variant="gradient"
@@ -104,18 +145,6 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput type="password" label="Password" fullWidth onChange={(e) => handlePasswordChange(e)}/>
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={(e) => handleOnLogin(e)}>
                 sign in
@@ -139,8 +168,9 @@ function Basic() {
           </MDBox>
         </MDBox>
       </Card>
+
     </BasicLayout>
   );
-}
+});
 
 export default Basic;

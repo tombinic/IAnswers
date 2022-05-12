@@ -14,6 +14,8 @@ var MongoClient  = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/nlpUser";
 var modelPromise = {};
 var answer = null;
+const cors = require("cors");
+app.use(cors());
 
 //Body Parser Setup
 const bodyParser = require('body-parser');
