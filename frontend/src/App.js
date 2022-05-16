@@ -80,6 +80,8 @@ export default function App() {
                                     name: (infos==null)?"":infos.name,
                                     surname:(infos==null)?"":infos.surname
                                   });
+
+
   const { pathname } = useLocation();
 
 
@@ -129,7 +131,7 @@ export default function App() {
       </Routes>
       )
     }else{
-      console.log(auth);
+
       return(
         <Routes>
         <Route exact path="/dashboard" element={ <Dashboard />}></Route>

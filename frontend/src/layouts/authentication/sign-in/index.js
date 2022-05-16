@@ -77,8 +77,8 @@ const Basic = forwardRef(( { setAuth }, ref) => {
         {
           var infos = {success : true, email : responseText.email , name : responseText.name , surname : responseText.surname};
           localStorage.setItem('auth', JSON.stringify(infos));
-          //navigate("/dashboard")
-          setAuth({infos});
+          //navigate("/dashboard");
+          setAuth( infos);
         }
         else
         {
