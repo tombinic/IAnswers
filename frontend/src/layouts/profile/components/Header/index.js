@@ -51,7 +51,7 @@ const Header = forwardRef(( { children , auth }, ref) => {
         : setTabsOrientation("horizontal");
     }
 
-    /** 
+    /**
      The event listener that's calling the handleTabsOrientation function when resizing the window.
     */
     window.addEventListener("resize", handleTabsOrientation);
@@ -102,9 +102,7 @@ const Header = forwardRef(( { children , auth }, ref) => {
               <MDTypography variant="h5" fontWeight="medium">
                 {auth.name+" "+auth.surname}
               </MDTypography>
-              <MDTypography variant="button" color="text" fontWeight="regular">
-                {auth.email}
-              </MDTypography>
+
             </MDBox>
           </Grid>
         </Grid>

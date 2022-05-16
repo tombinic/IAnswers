@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
-
+import { forwardRef} from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
@@ -25,7 +25,13 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
+const ComplexStatisticsCard = forwardRef (({ topics, setTopics, color, title, count, percentage, icon, index}, ref ) => {
+//console.log(topics.topics[index]);
+const changeTopic = () => {
+  //alert(topics.topics[index])
+  setTopics({topics: topics.topics, mainTopic: topics.topics[index]});
+}
+
   return (
     <Card>
       <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
@@ -60,16 +66,18 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
             component="span"
             variant="button"
             fontWeight="bold"
-            color={percentage.color}
+            color="success"
+            onClick={changeTopic}
           >
-            {percentage.amount}
+          {percentage.label}
+
           </MDTypography>
-          &nbsp;{percentage.label}
+          &nbsp;<b> {percentage.amount}</b>
         </MDTypography>
       </MDBox>
     </Card>
   );
-}
+});
 
 // Setting default values for the props of ComplexStatisticsCard
 ComplexStatisticsCard.defaultProps = {

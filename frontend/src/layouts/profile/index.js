@@ -65,10 +65,10 @@ const Overview = forwardRef(( { auth }, ref) => {
                 title="profile information"
                 description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
                 info={{
-                  fullName: "Alec M. Thompson",
-                  mobile: "(44) 123 1234 123",
-                  email: "alecthompson@mail.com",
-                  location: "USA",
+                  surname: auth.surname,
+                  name: auth.name,
+                  email: auth.email,
+                  location: "ITA",
                 }}
 
                 action={{ route: "", tooltip: "Edit Profile" }}

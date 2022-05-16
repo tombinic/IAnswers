@@ -53,7 +53,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
   const [email, setEmail] = useState(null);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
-  
+
 
   const handleOnLogin = (e) => {
     let hash =  sha3_512(pw);
@@ -78,7 +78,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
           var infos = {success : true, email : responseText.email , name : responseText.name , surname : responseText.surname};
           localStorage.setItem('auth', JSON.stringify(infos));
           //navigate("/dashboard");
-          setAuth( infos);
+          setAuth(infos);
         }
         else
         {
@@ -98,12 +98,10 @@ const Basic = forwardRef(( { setAuth }, ref) => {
     setPw(e.target.value);
   };
 
-
-
   return (
 
     <BasicLayout image={bgImage}>
-      
+
       <Card>
         <MDBox
           variant="gradient"
