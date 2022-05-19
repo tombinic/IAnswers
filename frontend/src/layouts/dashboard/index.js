@@ -27,6 +27,7 @@ import Footer from "examples/Footer";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import QuestionCard from "examples/Cards/QuestionCard";
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
@@ -38,12 +39,88 @@ import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 
 
-const  Dashboard = forwardRef (( { topics, setTopics }, ref) => {
+const  Dashboard = forwardRef (( {  }, ref) => {
   const { sales, tasks } = reportsLineChartData;
+
+
+  const [topics, setTopics] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  const [btnLoaded, setBtnLoaded] = useState(false);
+  const [question, setQuestion] = useState(null);
+  const [answer, setAnswer] = useState(null);
+
+  const handleQuestionChange = (e) => {
+    setQuestion(e.target.value);
+  }
+
+  const sendQuestion = () => {
+    setBtnLoaded(true);
+		fetch('http://localhost:3005/question',
+		{
+			headers:
+			{
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: 'POST',
+			credentials: 'same-origin',
+      body: JSON.stringify({subject: topics.mainTopic.title, question: question})
+		})
+		.then((response) => response.text())
+		.then((responseText) => {
+
+        responseText = JSON.parse(responseText);
+        if(responseText.answers.length == 0) {
+          setAnswer(null);
+          setBtnLoaded(false);
+        }
+        else {
+          setAnswer(responseText.answers[0].text);
+          setBtnLoaded(false);
+        }
+      console.log(responseText);
+		});
+	}
+
+  const getTopics = () => {
+    setLoaded(true);
+    fetch('http://localhost:3005/topics',
+    {
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json',
+       },
+       method: 'POST',
+       credentials: 'same-origin',
+       body: JSON.stringify({})
+    })
+    .then((response) => response.text())
+    .then((responseText) => {
+      responseText = JSON.parse(responseText);
+
+     setTopics({topics: responseText.result, mainTopic: (topics === null)?"":(topics.mainTopic)});
+     localStorage.setItem('topics', JSON.stringify(topics));
+
+
+    })
+    .catch((error) => {
+        console.error("Error in login API: " + error);
+        return null;
+    });
+    }
+
+    if(!loaded) {
+      getTopics();
+      if(JSON.parse(localStorage.getItem('topics')) != null) {
+        console.log("riga 114");
+        setTopics(JSON.parse(localStorage.getItem('topics')));
+      }
+    }
+
   var topicsList = [];
 
   topicsList = (topics === null)?null:topics.topics.map((element, index) =>
-  <Grid item xs={12} md={6} lg={3}>
+  <Grid item xs={12} md={6} lg={4}>
     <MDBox mb={1.5}>
    <ComplexStatisticsCard
       color="success"
@@ -73,9 +150,7 @@ const  Dashboard = forwardRef (( { topics, setTopics }, ref) => {
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
 
-            </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
@@ -86,23 +161,39 @@ const  Dashboard = forwardRef (( { topics, setTopics }, ref) => {
                   chart={sales}
 
                 />
+                <Grid item xs={12} md={6} lg={12}>
+                  <MDBox py={3} mb={3}>
+                    <QuestionCard
+                      color="success"
+                      title={(topics === null)?"":topics.mainTopic.title}
+                      description={(topics === null)?"":topics.mainTopic.summary}
+                      date={(topics === null)?"":topics.mainTopic.topic}
+                      chart={sales}
+                      onClick={sendQuestion}
+                      btnState={btnLoaded}
+                      handleQuestionChange={handleQuestionChange}
+                    />
+                  </MDBox>
+                </Grid>
               </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
 
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
+            <MDBox mb={3}>
+              <ReportsLineChart
+                color="success"
+                title={(topics === null)?"":topics.mainTopic.title}
+                description={(topics === null)?"":topics.mainTopic.text}
+                date={(topics === null)?"":topics.mainTopic.topic}
+                chart={sales}
 
+              />
+            </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
 
-            </Grid>
           </Grid>
         </MDBox>
+
       </MDBox>
       <Footer />
     </DashboardLayout>

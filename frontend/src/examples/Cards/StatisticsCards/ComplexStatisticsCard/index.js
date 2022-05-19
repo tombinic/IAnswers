@@ -28,7 +28,7 @@ import MDTypography from "components/MDTypography";
 const ComplexStatisticsCard = forwardRef (({ topics, setTopics, color, title, count, percentage, icon, index}, ref ) => {
 //console.log(topics.topics[index]);
 const changeTopic = () => {
-  //alert(topics.topics[index])
+  //console.log(topics.topics[index]);
   setTopics({topics: topics.topics, mainTopic: topics.topics[index]});
 }
 

@@ -75,37 +75,14 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const infos = JSON.parse(localStorage.getItem('auth'));
 
+
   const [auth, setAuth] = useState({success: (infos==null)?false:infos.success,
                                     email : (infos==null)?"":infos.email,
                                     name: (infos==null)?"":infos.name,
                                     surname:(infos==null)?"":infos.surname
                                   });
 
-  const [topics, setTopics] = useState(null);
 
-  const getTopics = () => {
-    fetch('http://localhost:3005/topics',
-    {
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json',
-       },
-       method: 'POST',
-       credentials: 'same-origin',
-       body: JSON.stringify({})
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      responseText = JSON.parse(responseText);
-      setTopics({topics: responseText.result, mainTopic: (auth.success)?(topics === null)?"":(topics.mainTopic):responseText.result[0]});
-    })
-    .catch((error) => {
-        console.error("Error in login API: " + error);
-        return null;
-    });
-    }
-
-    getTopics();
 
   const { pathname } = useLocation();
 
@@ -155,7 +132,7 @@ export default function App() {
 
       return(
         <Routes>
-        <Route exact path="/dashboard" element={ <Dashboard topics={topics} setTopics={setTopics}/>}></Route>
+        <Route exact path="/dashboard" element={ <Dashboard />}></Route>
         <Route exact path="/profile" element={<Profile auth={auth}/>}></Route>
         <Route exact path="/logout" element={ <Logout setAuth={setAuth} />}></Route>
         <Route exact path="/tables" element={ <Tables />}></Route>

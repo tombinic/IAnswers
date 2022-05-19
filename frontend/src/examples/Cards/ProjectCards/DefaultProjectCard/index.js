@@ -30,7 +30,12 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
-function DefaultProjectCard({ image, label, title, description, action, authors }) {
+function DefaultProjectCard({ image, label, title, description, action, authors, index }) {
+  const updateMainTopic = () => {
+    var topics = JSON.parse(localStorage.getItem('topics'));
+    topics.mainTopic = topics.topics[index];
+    localStorage.setItem('topics', JSON.stringify(topics));
+  }
   const renderAuthors = authors.map(({ image: media, name }) => (
     <Tooltip key={name} title={name} placement="bottom">
       <MDAvatar
@@ -115,6 +120,7 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
               variant="outlined"
               size="small"
               color={action.color}
+              onClick={updateMainTopic}
             >
               {action.label}
             </MDButton>
