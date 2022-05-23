@@ -58,7 +58,7 @@ const Overview = forwardRef(( { auth }, ref) => {
   const topics = JSON.parse(localStorage.getItem('topics'));
   //console.log(topics);
   var topicsList = [];
-  topicsList = topics.topics.map((element, index) =>
+  topicsList = (topics!=null)?topics.topics.map((element, index) =>
   <Grid item xs={12} md={6} xl={3}>
     <DefaultProjectCard
       image={homeDecor1}
@@ -73,7 +73,7 @@ const Overview = forwardRef(( { auth }, ref) => {
       }}
       index={index}
     />
-  </Grid>);
+  </Grid>):[];
   return (
     <DashboardLayout>
       <DashboardNavbar />

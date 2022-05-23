@@ -25,13 +25,15 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-const ComplexStatisticsCard = forwardRef (({ topics, setTopics, color, title, count, percentage, icon, index}, ref ) => {
+const ComplexStatisticsCard = forwardRef (({ topics, reload, color, title, count, percentage, icon, index}, ref ) => {
 //console.log(topics.topics[index]);
 const changeTopic = () => {
   //console.log(topics.topics[index]);
-  setTopics({topics: topics.topics, mainTopic: topics.topics[index]});
+  var topics = JSON.parse(localStorage.getItem('topics'));
+  topics.mainTopic = topics.topics[index];
+  localStorage.setItem('topics', JSON.stringify(topics));
+  reload(false);
 }
-
   return (
     <Card>
       <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>

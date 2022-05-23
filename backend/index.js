@@ -270,7 +270,7 @@ app.post('/topics', function(request , response){
 	{
 		if (err) throw err;
 	    if (typeof result !== 'undefined' && result.length > 0) {
-			response.send(JSON.stringify({result , message: 'Successful'}));
+			response.send(JSON.stringify({result , message: 'Successful' }));
 			console.log(result);
 		}
 		else
