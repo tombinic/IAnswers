@@ -74,7 +74,7 @@ export default function App() {
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const infos = JSON.parse(localStorage.getItem('auth'));
-
+  const [loaded,setLoaded] = useState(false);
 
   const [auth, setAuth] = useState({success: (infos==null)?false:infos.success,
                                     email : (infos==null)?"":infos.email,
@@ -85,6 +85,40 @@ export default function App() {
 
 
   const { pathname } = useLocation();
+
+
+  const getTopics = () => {
+
+    fetch('http://localhost:3005/topics',
+    {
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json',
+       },
+       method: 'POST',
+       credentials: 'same-origin',
+       body: JSON.stringify({})
+    })
+    .then((response) => response.text())
+    .then((responseText) => {
+      responseText = JSON.parse(responseText);
+      var tmp = {topics: responseText.result, mainTopic:""};
+      var topicStorage = JSON.parse(localStorage.getItem('topics'));
+      if(topicStorage==null){
+        console.log("times");
+        localStorage.setItem('topics', JSON.stringify(tmp));
+      }
+      setLoaded(true);
+      //window.location.replace("/dashboard");
+    })
+    .catch((error) => {
+        console.error("Error in login API: " + error);
+        return null;
+    });
+    
+    }
+
+
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -165,6 +199,12 @@ export default function App() {
       </Icon>
     </MDBox>
   );
+
+  if(!loaded){
+    getTopics();
+  }
+
+
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>

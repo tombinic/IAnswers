@@ -28,21 +28,21 @@ import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import QuestionCard from "examples/Cards/QuestionCard";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
+import $ from 'jquery';
 
 
 
 
 const  Dashboard = forwardRef (( {  }, ref) => {
   const { sales, tasks } = reportsLineChartData;
-
+  var topicStorage = null;
 
   // const [topics, setTopics] = useState(null);
   const [reload, setReload] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [btnLoaded, setBtnLoaded] = useState(false);
   const [question, setQuestion] = useState(null);
-  const [answer, setAnswer] = useState(null);
+  const [answer, setAnswer] = useState(null); 
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -65,12 +65,16 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		.then((responseText) => {
 
         responseText = JSON.parse(responseText);
+        console.log(responseText.answers);
         if(responseText.answers.length == 0) {
           setAnswer(null);
           setBtnLoaded(false);
         }
         else {
           setAnswer(responseText.answers[0].text);
+          var html = $( ("#" +topicStorage.mainTopic.title) ).html();
+          var newHtml = html.replace(''+responseText.answers[0].text, '<b><i>'+responseText.answers[0].text+'</i></b>');
+          $(("#" +topicStorage.mainTopic.title)).html(newHtml);
           setBtnLoaded(false);
         }
 
@@ -78,54 +82,14 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		});
 	}
 
-  const getTopics = () => {
-    setLoaded(true);
-    fetch('http://localhost:3005/topics',
-    {
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json',
-       },
-       method: 'POST',
-       credentials: 'same-origin',
-       body: JSON.stringify({})
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      responseText = JSON.parse(responseText);
-      var tmp = {topics: responseText.result, mainTopic:""};
-      localStorage.setItem('topics', JSON.stringify(tmp));
-      topicStorage = JSON.parse(localStorage.getItem('topics'));
-      setLoaded(true);
-      //setTopics(tmp);
-    })
-    .catch((error) => {
-        console.error("Error in login API: " + error);
-        return null;
-    });
-    }
-    var topicStorage = null;
+  const changeTopic = () => {
+    setLoaded(!loaded);
+  } 
 
-    if(!loaded) {
-      if(JSON.parse(localStorage.getItem('topics')) != null) {
-        topicStorage = JSON.parse(localStorage.getItem('topics'));
-        setLoaded(true);
-      } 
-      else{
-        getTopics();
-      }
-    }else{
-      topicStorage = JSON.parse(localStorage.getItem('topics'));
-    }
-
-    //topicStorage = JSON.parse(localStorage.getItem('topics'));
-
-
+  topicStorage = JSON.parse(localStorage.getItem('topics'));
   var topicsList = [];
- 
-  //topics.mainTopic = topics.topics[index];
-
-  topicsList = (topicStorage === null)?null:topicStorage.topics.map((element, index) =>
+  
+  topicsList = (topicStorage == null)?null:topicStorage.topics.map((element, index) =>
   <Grid item xs={12} md={6} lg={4}>
     <MDBox mb={1.5}>
    <ComplexStatisticsCard
@@ -134,12 +98,12 @@ const  Dashboard = forwardRef (( {  }, ref) => {
       title={element.title}
       count={element.topic}
       index={index}
-      percentage={{
+      subtitle={{
         label: "Go to",
         amount: element.title,
       }}
       topics = {topicStorage.topics}
-      reload = {setLoaded}
+      reload = {changeTopic}
 
     />
     </MDBox>
@@ -188,14 +152,19 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 
             <Grid item xs={12} md={6} lg={8}>
             <MDBox mb={3}>
+              
               <ReportsLineChart
                 color="success"
                 title={(topicStorage === null)?"":topicStorage.mainTopic.title}
                 description={(topicStorage === null)?"":topicStorage.mainTopic.text}
                 date={(topicStorage === null)?"":topicStorage.mainTopic.topic}
                 chart={sales}
+                id={topicStorage.mainTopic.title}
+                
 
               />
+              <button onClick={changeTopic}> sadds
+              </button>
             </MDBox>
             </Grid>
 

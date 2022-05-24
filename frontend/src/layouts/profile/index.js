@@ -56,12 +56,12 @@ const Overview = forwardRef(( { auth }, ref) => {
 
 // qua è null topics
   const topics = JSON.parse(localStorage.getItem('topics'));
-  //console.log(topics);
+
   var topicsList = [];
   topicsList = (topics!=null)?topics.topics.map((element, index) =>
   <Grid item xs={12} md={6} xl={3}>
     <DefaultProjectCard
-      image={homeDecor1}
+      image={(topics==null)?"":element.blob}
       label={element.topic}
       title={element.title}
       description={element.summary}

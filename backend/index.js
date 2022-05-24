@@ -58,7 +58,6 @@ const topicsSchema = mongoose.Schema({
   summary: String,
   text: String,
   topic: String,
-  train: String,
 },
 {
   collection: 'topics',
@@ -174,7 +173,9 @@ app.post('/question', function(request, response)
           answers: answers
         }));
       };
-      process(question, result[0].train);
+	  console.log(result[0].text);
+	  
+      process(question, result[0].text);
 
     }
     else{

@@ -33,10 +33,9 @@ import MDTypography from "components/MDTypography";
 // ReportsLineChart configurations
 import configs from "examples/Charts/LineCharts/ReportsLineChart/configs";
 
-function ReportsLineChart({ color, title, description, date, chart , image,reload}) {
+function ReportsLineChart({ id, title, description, date, chart , image,reload}) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
-  var newImage = image;
-  console.log(image);
+  var newImage = (image==null)?"":image;
 
   function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
@@ -47,16 +46,16 @@ function ReportsLineChart({ color, title, description, date, chart , image,reloa
     <Card sx={{ height: "100%" }}>
       <MDBox padding="1rem">
 
-                <MDBox
-            >
-              <img    py={2}               pr={0.5}               mt={-5} width="100%" src={newImage} />              
+                <MDBox>
+              <img    py={2} pr={0.5}  mt={-5} width="100%" src={newImage} />              
             </MDBox>
         <MDBox pt={3} pb={1} px={1}>
           <MDTypography variant="h6" textTransform="capitalize">
             {title}
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
-            {description}
+            <div id={id} >{description}</div>
+            
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">

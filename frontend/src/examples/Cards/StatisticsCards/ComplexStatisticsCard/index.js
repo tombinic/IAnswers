@@ -25,15 +25,16 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-const ComplexStatisticsCard = forwardRef (({ topics, reload, color, title, count, percentage, icon, index}, ref ) => {
-//console.log(topics.topics[index]);
+const ComplexStatisticsCard = forwardRef (({ reload, color, title, count, subtitle, icon, index}, ref ) => {
+
 const changeTopic = () => {
-  //console.log(topics.topics[index]);
   var topics = JSON.parse(localStorage.getItem('topics'));
   topics.mainTopic = topics.topics[index];
   localStorage.setItem('topics', JSON.stringify(topics));
-  reload(false);
+  reload();
 }
+//console.log("render page complex");  
+
   return (
     <Card>
       <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
@@ -70,11 +71,11 @@ const changeTopic = () => {
             fontWeight="bold"
             color="success"
             onClick={changeTopic}
-          >
-          {percentage.label}
+          ><span style={{cursor: "pointer"}}>{subtitle.label}</span>
+          
 
           </MDTypography>
-          &nbsp;<b> {percentage.amount}</b>
+          &nbsp;<b> {subtitle.amount}</b>
         </MDTypography>
       </MDBox>
     </Card>
@@ -84,7 +85,7 @@ const changeTopic = () => {
 // Setting default values for the props of ComplexStatisticsCard
 ComplexStatisticsCard.defaultProps = {
   color: "info",
-  percentage: {
+  subtitle: {
     color: "success",
     text: "",
     label: "",
@@ -105,7 +106,7 @@ ComplexStatisticsCard.propTypes = {
   ]),
   title: PropTypes.string.isRequired,
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  percentage: PropTypes.shape({
+  subtitle: PropTypes.shape({
     color: PropTypes.oneOf([
       "primary",
       "secondary",
