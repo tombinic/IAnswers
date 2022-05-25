@@ -46,6 +46,7 @@ const userSchema = mongoose.Schema({
     surname: String,
     email: String,
     password: String,
+    motto: String,
 },
 {
   collection: 'User',
@@ -97,6 +98,7 @@ app.post('/signup', function(request, response)
 	var name = request.body.name;
 	var email = request.body.email;
 	var password = request.body.password;
+  var motto = request.body.motto;
 
 	if(request.body.email && request.body.password && request.body.name)
 	{
@@ -104,7 +106,9 @@ app.post('/signup', function(request, response)
 			_id: new ObjectID(),
       password: request.body.password,
 			email: request.body.email,
-			name: request.body.name
+			name: request.body.name,
+      surname: request.body.surname,
+      motto: request.body.motto
 		}
 	}
 	else
@@ -117,33 +121,24 @@ app.post('/signup', function(request, response)
 	User.find(query, function(err, result)
 	{
 		if (err) throw err;
+
 	    if (typeof result !== 'undefined' && result.length > 0) {
 	    	response.send(JSON.stringify({
-				message: 'User exists'
+				message: 'User already exists!'
 			}));
 		}
+
 		else
 		{
 			var userObj = new User(userData);
-
 			userObj.save(function(error,data)
 			{
-				if(error)
-				{
 					response.send(JSON.stringify({
-						message: "Unable to write to DB",
-						extra: error
+            extra:data,
+								message: "Successful"
 					}));
-				}
-				else
-				{
-					response.send(JSON.stringify({
-						extra: data,
-						message: "Successful"
-					}));
-				}
-			});
 
+			});
 		}
 	});
 });
@@ -174,7 +169,7 @@ app.post('/question', function(request, response)
         }));
       };
 	  console.log(result[0].text);
-	  
+
       process(question, result[0].text);
 
     }
@@ -218,6 +213,7 @@ app.post('/login', function(request, response)
 		    		email: email,
 		    		name: result[0].name,
             surname: result[0].surname,
+            motto: result[0].motto,
 					message: 'Successful'
 				}));
 		    }

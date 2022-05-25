@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
@@ -76,7 +60,6 @@ export default styled(Box)(({ theme, ownerState }) => {
   const validBorderRadius = ["xs", "sm", "md", "lg", "xl", "xxl", "section"];
   const validBoxShadows = ["xs", "sm", "md", "lg", "xl", "xxl", "inset"];
 
-  // background value
   let backgroundValue = bgColor;
 
   if (variant === "gradient") {
@@ -89,21 +72,18 @@ export default styled(Box)(({ theme, ownerState }) => {
     backgroundValue = bgColor;
   }
 
-  // color value
   let colorValue = color;
 
   if (validColors.find((el) => el === color)) {
     colorValue = palette[color] ? palette[color].main : greyColors[color];
   }
 
-  // borderRadius value
   let borderRadiusValue = borderRadius;
 
   if (validBorderRadius.find((el) => el === borderRadius)) {
     borderRadiusValue = radius[borderRadius];
   }
 
-  // boxShadow value
   let boxShadowValue = "none";
 
   if (validBoxShadows.find((el) => el === shadow)) {

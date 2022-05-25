@@ -1,49 +1,23 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState,createContext, useContext, forwardRef} from "react";
 import { sha3_512 } from 'js-sha3';
-// react-router-dom components
 import { Link , Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
 
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
-// Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
-
-
+import bgImage from "assets/images/bg.gif";
 
 const Basic = forwardRef(( { setAuth }, ref) => {
   const navigate = useNavigate();
@@ -54,9 +28,8 @@ const Basic = forwardRef(( { setAuth }, ref) => {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-
   const handleOnLogin = (e) => {
-    let hash =  sha3_512(pw);
+    let hash = sha3_512(pw);
 
     e.preventDefault();
     fetch('http://localhost:3005/login',
@@ -68,21 +41,19 @@ const Basic = forwardRef(( { setAuth }, ref) => {
          method: 'POST',
          credentials: 'same-origin',
          body: JSON.stringify({email: email, password: hash})
-         //JSON.stringify({ fields })
       })
       .then((response) => response.text())
       .then((responseText) => {
         responseText = JSON.parse(responseText);
         if(responseText.message === "Successful")
         {
-          var infos = {success : true, email : responseText.email , name : responseText.name , surname : responseText.surname};
+          var infos = {success : true, email : responseText.email, name : responseText.name, surname : responseText.surname, motto: responseText.motto};
           localStorage.setItem('auth', JSON.stringify(infos));
-          //navigate("/dashboard");
           setAuth(infos);
         }
         else
         {
-          alert("credenziali errate");
+          alert("Wrong credentials!");
         }
       })
       .catch((error) => {
@@ -99,9 +70,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
   };
 
   return (
-
     <BasicLayout image={bgImage}>
-
       <Card>
         <MDBox
           variant="gradient"
@@ -118,19 +87,14 @@ const Basic = forwardRef(( { setAuth }, ref) => {
             Sign in
           </MDTypography>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+            <Grid item xs={3}>
+              <MDTypography component={MuiLink} href="https://github.com/nicolotombini" variant="body1" color="white">
                 <GitHubIcon color="inherit" />
               </MDTypography>
             </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
+            <Grid item xs={3}>
+              <MDTypography component={MuiLink} href="https://www.linkedin.com/in/nicol%C3%B2-tombini-124b52235/" variant="body1" color="white">
+                <LinkedInIcon color="inherit" />
               </MDTypography>
             </Grid>
           </Grid>
@@ -166,7 +130,6 @@ const Basic = forwardRef(( { setAuth }, ref) => {
           </MDBox>
         </MDBox>
       </Card>
-
     </BasicLayout>
   );
 });

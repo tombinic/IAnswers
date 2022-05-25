@@ -22,6 +22,6 @@ const LoadingButtonsTransition = forwardRef (( { onClick, btnState}, ref) => {
         </LoadingButton>
       </Box>
 );
-}  );
+});
 
 export default LoadingButtonsTransition;

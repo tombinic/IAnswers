@@ -1,53 +1,31 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useMemo,useState } from "react";
 
-// porp-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
-// react-chartjs-2 components
 import { Line } from "react-chartjs-2";
 
-// @mui material components
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// ReportsLineChart configurations
 import configs from "examples/Charts/LineCharts/ReportsLineChart/configs";
 
-function ReportsLineChart({ id, title, description, date, chart , image,reload}) {
-  const { data, options } = configs(chart.labels || [], chart.datasets || {});
+function ReportsLineChart({ id, title, description, date , image,reload}) {
   var newImage = (image==null)?"":image;
 
   function useForceUpdate(){
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue(value => value + 1); // update the state to force render
+    const [value, setValue] = useState(0);
+    return () => setValue(value => value + 1);
 }
 
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox padding="1rem">
-
-                <MDBox>
-              <img    py={2} pr={0.5}  mt={-5} width="100%" src={newImage} />              
+            <MDBox>
+              <img py={2} pr={0.5}  mt={-5} width="100%" src={newImage} />
             </MDBox>
         <MDBox pt={3} pb={1} px={1}>
           <MDTypography variant="h6" textTransform="capitalize">
@@ -55,7 +33,6 @@ function ReportsLineChart({ id, title, description, date, chart , image,reload})
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
             <div id={id} >{description}</div>
-            
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">
@@ -72,13 +49,11 @@ function ReportsLineChart({ id, title, description, date, chart , image,reload})
   );
 }
 
-// Setting default values for the props of ReportsLineChart
 ReportsLineChart.defaultProps = {
   color: "dark",
   description: "",
 };
 
-// Typechecking props for the ReportsLineChart
 ReportsLineChart.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
   title: PropTypes.string.isRequired,

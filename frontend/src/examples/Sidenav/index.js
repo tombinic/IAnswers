@@ -1,45 +1,23 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useEffect } from "react";
 
-// react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
 
-// prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
-// @mui material components
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-// Material Dashboard 2 React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 
-// Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
-// Material Dashboard 2 React context
 import {
   useMaterialUIController,
   setMiniSidenav,
@@ -64,26 +42,19 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {
-    // A function that sets the mini state of the sidenav.
     function handleMiniSidenav() {
       setMiniSidenav(dispatch, window.innerWidth < 1200);
       setTransparentSidenav(dispatch, window.innerWidth < 1200 ? false : transparentSidenav);
       setWhiteSidenav(dispatch, window.innerWidth < 1200 ? false : whiteSidenav);
     }
 
-    /** 
-     The event listener that's calling the handleMiniSidenav function when resizing the window.
-    */
     window.addEventListener("resize", handleMiniSidenav);
 
-    // Call the handleMiniSidenav function to set the state with the initial value.
     handleMiniSidenav();
 
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
 
-  // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     let returnValue;
 
@@ -161,7 +132,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
+          {brand && <MDBox component="img" src={brand} alt="Brand" width="11rem" />}
 
         </MDBox>
       </MDBox>
@@ -176,13 +147,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   );
 }
 
-// Setting default values for the props of Sidenav
 Sidenav.defaultProps = {
   color: "info",
   brand: "",
 };
 
-// Typechecking props for the Sidenav
 Sidenav.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
   brand: PropTypes.string,

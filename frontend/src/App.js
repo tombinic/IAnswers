@@ -1,64 +1,27 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect} from "react";
 
-// react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-// @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import SignIn from "layouts/authentication/sign-in";
 import Dashboard from "layouts/dashboard";
 import SignUp from "layouts/authentication/sign-up";
 import Profile from "layouts/profile";
-import Tables from "layouts/tables";
-
-// ToDo - togliere
+import APIs from "layouts/apis";
 import Logout from "layouts/authentication/logout";
 
-
-// Material Dashboard 2 React themes
 import theme from "assets/theme";
-
-
-// Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
-
-
-
-// Material Dashboard 2 React routes
 import routes from "routes";
-
-// Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
-// Images
 import brandWhite from "assets/images/logo.png";
 import brandDark from "assets/images/logo.png";
-
-// COntext
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -79,16 +42,13 @@ export default function App() {
   const [auth, setAuth] = useState({success: (infos==null)?false:infos.success,
                                     email : (infos==null)?"":infos.email,
                                     name: (infos==null)?"":infos.name,
-                                    surname:(infos==null)?"":infos.surname
+                                    surname:(infos==null)?"":infos.surname,
+                                    motto:(infos==null)?"":infos.motto,
                                   });
-
-
 
   const { pathname } = useLocation();
 
-
   const getTopics = () => {
-
     fetch('http://localhost:3005/topics',
     {
        headers: {
@@ -105,22 +65,16 @@ export default function App() {
       var tmp = {topics: responseText.result, mainTopic:""};
       var topicStorage = JSON.parse(localStorage.getItem('topics'));
       if(topicStorage==null){
-        console.log("times");
         localStorage.setItem('topics', JSON.stringify(tmp));
       }
       setLoaded(true);
-      //window.location.replace("/dashboard");
     })
     .catch((error) => {
         console.error("Error in login API: " + error);
         return null;
     });
-    
-    }
+  }
 
-
-
-  // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
       setMiniSidenav(dispatch, false);
@@ -128,7 +82,6 @@ export default function App() {
     }
   };
 
-  // Close sidenav when mouse leave mini sidenav
   const handleOnMouseLeave = () => {
     if (onMouseEnter) {
       setMiniSidenav(dispatch, true);
@@ -136,24 +89,18 @@ export default function App() {
     }
   };
 
-  // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
 
-  // Setting the dir attribute for the body element
   useEffect(() => {
     document.body.setAttribute("dir", direction);
   }, [direction]);
 
-  // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
-
-  // Function called to force route to SignIn in case of not precedent logIn
   const isLoggedin = () => {
-
     if(!auth.success){
       return (
       <Routes>
@@ -162,14 +109,13 @@ export default function App() {
         <Route  path="*"  element={<Navigate  to="/authentication/sign-in" />}></Route>
       </Routes>
       )
-    }else{
-
+    } else {
       return(
         <Routes>
         <Route exact path="/dashboard" element={ <Dashboard />}></Route>
         <Route exact path="/profile" element={<Profile auth={auth}/>}></Route>
         <Route exact path="/logout" element={ <Logout setAuth={setAuth} />}></Route>
-        <Route exact path="/tables" element={ <Tables />}></Route>
+        <Route exact path="/apis" element={ <APIs />}></Route>
         <Route path="*" element={<Navigate  to="/dashboard" />}></Route>
         </Routes>
       )
@@ -204,8 +150,6 @@ export default function App() {
     getTopics();
   }
 
-
-
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
@@ -226,8 +170,6 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       {isLoggedin()}
-
-
     </ThemeProvider>
   );
 }
