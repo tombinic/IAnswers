@@ -9,6 +9,7 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import QuestionCard from "examples/Cards/QuestionCard";
 import $ from 'jquery';
 
+
 const  Dashboard = forwardRef (( {  }, ref) => {
   var topicStorage = null;
 
@@ -18,7 +19,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
   const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState(null);
 
-  
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -40,7 +40,7 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		.then((response) => response.text())
 		.then((responseText) => {
         responseText = JSON.parse(responseText);
-        
+
         if(responseText.answers.length == 0) {
           setAnswer(null);
           setBtnLoaded(false);
@@ -109,10 +109,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                 <Grid item xs={12} md={6} lg={12}>
                   <MDBox py={3} mb={3}>
                     <QuestionCard
-                      color="success"
-                      title={(activeTopic === null)?"":activeTopic.title}
-                      description={(activeTopic === null)?"":activeTopic.summary}
-                      date={(activeTopic === null)?"":activeTopic.topic}
                       onClick={sendQuestion}
                       btnState={btnLoaded}
                       handleQuestionChange={handleQuestionChange}
@@ -129,7 +125,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                 title={(activeTopic === null)?"":activeTopic.title}
                 description={(activeTopic === null)?"":activeTopic.text}
                 date={(activeTopic === null)?"":activeTopic.topic}
-                id={(activeTopic === null)?"":activeTopic.title}
               />
             </MDBox>
             </Grid>

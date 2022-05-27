@@ -20,6 +20,7 @@ MDBox.defaultProps = {
   borderRadius: "none",
   shadow: "none",
   coloredShadow: "none",
+
 };
 
 MDBox.propTypes = {

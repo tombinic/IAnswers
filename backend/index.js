@@ -287,8 +287,31 @@ app.get('/api/topics', (req, res) => {
     if (err) throw err;
       res.send(result);
       console.log(result);
-  });
+  }).select('-_id');
 });
+
+app.get('/api/topics/titles', (req, res) => {
+  var query = {};
+  const topics = mongoose.model('topics', topicsSchema);
+  topics.find(query, function(err, result)
+  {
+    if (err) throw err;
+      res.send(result);
+      console.log(result);
+  }).select('title -_id');
+});
+
+app.get('/api/topics/texts', (req, res) => {
+  var query = {};
+  const topics = mongoose.model('topics', topicsSchema);
+  topics.find(query, function(err, result)
+  {
+    if (err) throw err;
+      res.send(result);
+      console.log(result);
+  }).select('text -_id');
+});
+
 
 app.get('/api/:username', (req, res) => {
   var username = req.params.username;
@@ -299,7 +322,7 @@ app.get('/api/:username', (req, res) => {
 	{
 		if (err) throw err;
 	    	res.send(result);
-	})
+	}).select('-_id');
 });
 
 

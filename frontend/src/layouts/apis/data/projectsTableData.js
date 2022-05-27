@@ -3,12 +3,10 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
-import logoGithub from "assets/images/small-logos/github.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-import logoSlack from "assets/images/small-logos/logo-slack.svg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-import logoInvesion from "assets/images/small-logos/logo-invision.svg";
+import LogoTopics from "assets/images/small-logos/topics.svg";
+import LogoTexts from "assets/images/small-logos/texts.svg";
+import LogoTitles from "assets/images/small-logos/titles.svg";
+import LogoUser from "assets/images/small-logos/user.svg";
 
 export default function data() {
     const user = JSON.parse(localStorage.getItem('auth'));
@@ -41,7 +39,7 @@ export default function data() {
 
     rows: [
       {
-        project: <Project image={LogoAsana} name="Topics" />,
+        project: <Project image={LogoTopics} name="Topics" />,
         desc: (
           <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
             A complete list of topic in IAnswers
@@ -59,7 +57,43 @@ export default function data() {
         ),
       },
       {
-        project: <Project image={logoGithub} name="User" />,
+        project: <Project image={LogoTitles} name="Topics" />,
+        desc: (
+          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+            A complete list of topics' titles in IAnswers
+          </MDTypography>
+        ),
+        status: (
+          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+            online
+          </MDTypography>
+        ),
+        complete_url: (
+          <MDTypography component="a" href="http://localhost:3005/api/topics/titles" target="_blank" variant="button" color="text" fontWeight="medium">
+            api/topics/titles
+          </MDTypography>
+        ),
+      },
+      {
+        project: <Project image={LogoTexts} name="Topics" />,
+        desc: (
+          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+            A complete list of topics' texts in IAnswers
+          </MDTypography>
+        ),
+        status: (
+          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+            online
+          </MDTypography>
+        ),
+        complete_url: (
+          <MDTypography component="a" href="http://localhost:3005/api/topics/texts" target="_blank" variant="button" color="text" fontWeight="medium">
+            api/topics/texts
+          </MDTypography>
+        ),
+      },
+      {
+        project: <Project image={LogoUser} name="User" />,
         desc: (
           <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
             All information about you!

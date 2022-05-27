@@ -9,9 +9,17 @@ import DataTable from "examples/Tables/DataTable";
 
 import projectsTableData from "layouts/apis/data/projectsTableData";
 
+import {
+  useMaterialUIController,
+  setMiniSidenav,
+  setTransparentSidenav,
+  setWhiteSidenav,
+} from "context";
+
 function APIs() {
   const { columns: pColumns, rows: pRows } = projectsTableData();
-
+  const [controller] = useMaterialUIController();
+  const { sidenavColor } = controller;
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -25,7 +33,7 @@ function APIs() {
                 py={3}
                 px={2}
                 variant="gradient"
-                bgColor="info"
+                bgColor={sidenavColor}
                 borderRadius="lg"
                 coloredShadow="info"
               >

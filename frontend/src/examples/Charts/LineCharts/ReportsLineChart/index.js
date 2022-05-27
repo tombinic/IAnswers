@@ -11,7 +11,6 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-import configs from "examples/Charts/LineCharts/ReportsLineChart/configs";
 
 function ReportsLineChart({ id, title, description, date , image,reload}) {
   var newImage = (image==null)?"":image;
@@ -22,7 +21,7 @@ function ReportsLineChart({ id, title, description, date , image,reload}) {
 }
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card sx={{ height: "100%"}}>
       <MDBox padding="1rem">
             <MDBox>
               <img py={2} pr={0.5}  mt={-5} width="100%" src={newImage} />

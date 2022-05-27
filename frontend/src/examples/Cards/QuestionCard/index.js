@@ -23,15 +23,15 @@ import SearchingButton from "examples/Buttons/SearchingButton";
 const StyledInput = styled(TextField)({
   margin:'20px 0',
   '& input:valid + fieldset': {
-    borderColor: 'green',
+    borderColor: 'black',
     borderWidth: 2,
   },
   '& input:invalid + fieldset': {
-    borderColor: 'green',
+    borderColor: 'black',
     borderWidth: 2,
   },
   '& input:valid:focus + fieldset': {
-    borderColor: 'green',
+    borderColor: 'black',
     borderLeftWidth: 6,
     padding: '4px !important',
   },
