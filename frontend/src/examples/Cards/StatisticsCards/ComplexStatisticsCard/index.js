@@ -18,7 +18,9 @@ const [controller, dispatch] = useMaterialUIController();
 const { sidenavColor } = controller;
 const changeTopic = () => {
   var topics = JSON.parse(localStorage.getItem('topics'));
-  topics.mainTopic = topics.topics[index];
+  var activeTopic = topics.topics[index];
+  activeTopic.index = index;
+  localStorage.setItem('active-topics', JSON.stringify(activeTopic));
   localStorage.setItem('topics', JSON.stringify(topics));
   reload();
 }

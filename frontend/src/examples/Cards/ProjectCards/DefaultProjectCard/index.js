@@ -11,8 +11,11 @@ import MDAvatar from "components/MDAvatar";
 function DefaultProjectCard({ image, label, title, description, action, authors, index }) {
   const updateMainTopic = () => {
     var topics = JSON.parse(localStorage.getItem('topics'));
+    var activeTopic = topics.topics[index];
     topics.mainTopic = topics.topics[index];
-    localStorage.setItem('topics', JSON.stringify(topics));
+    topics.mainTopic.index = index;
+    //localStorage.setItem('topics', JSON.stringify(topics));
+    localStorage.setItem('active-topics', JSON.stringify(topics.mainTopic));
   }
   const renderAuthors = authors.map(({ image: media, name }) => (
     <Tooltip key={name} title={name} placement="bottom">

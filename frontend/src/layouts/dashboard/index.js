@@ -18,6 +18,8 @@ const  Dashboard = forwardRef (( {  }, ref) => {
   const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState(null);
 
+  
+
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
   }
@@ -38,7 +40,7 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		.then((response) => response.text())
 		.then((responseText) => {
         responseText = JSON.parse(responseText);
-        console.log(responseText.answers);
+        
         if(responseText.answers.length == 0) {
           setAnswer(null);
           setBtnLoaded(false);
@@ -54,11 +56,16 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 	}
 
   const changeTopic = () => {
+
     setLoaded(!loaded);
   }
 
   topicStorage = JSON.parse(localStorage.getItem('topics'));
+  var activeTopic = JSON.parse(localStorage.getItem('active-topics'));
   var topicsList = [];
+
+  //console.log(activeTopic);
+  //console.log(topicStorage);
 
   topicsList = (topicStorage == null)?null:topicStorage.topics.map((element, index) =>
   <Grid item xs={12} md={6} lg={4}>
@@ -93,19 +100,19 @@ const  Dashboard = forwardRef (( {  }, ref) => {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title={(topicStorage === null)?"":topicStorage.mainTopic.title}
-                  description={(topicStorage === null)?"":topicStorage.mainTopic.title}
-                  date={(topicStorage === null)?"":topicStorage.mainTopic.title}
-                  image ={(topicStorage === null)?"":topicStorage.mainTopic.blob}
+                  title={(activeTopic === null)?"":activeTopic.title}
+                  description={(activeTopic === null)?"":activeTopic.title}
+                  date={(activeTopic === null)?"":activeTopic.title}
+                  image ={(activeTopic === null)?"":activeTopic.blob}
                   reload={setReload}
                 />
                 <Grid item xs={12} md={6} lg={12}>
                   <MDBox py={3} mb={3}>
                     <QuestionCard
                       color="success"
-                      title={(topicStorage === null)?"":topicStorage.mainTopic.title}
-                      description={(topicStorage === null)?"":topicStorage.mainTopic.summary}
-                      date={(topicStorage === null)?"":topicStorage.mainTopic.topic}
+                      title={(activeTopic === null)?"":activeTopic.title}
+                      description={(activeTopic === null)?"":activeTopic.summary}
+                      date={(activeTopic === null)?"":activeTopic.topic}
                       onClick={sendQuestion}
                       btnState={btnLoaded}
                       handleQuestionChange={handleQuestionChange}
@@ -119,10 +126,10 @@ const  Dashboard = forwardRef (( {  }, ref) => {
             <MDBox mb={3}>
               <ReportsLineChart
                 color="success"
-                title={(topicStorage === null)?"":topicStorage.mainTopic.title}
-                description={(topicStorage === null)?"":topicStorage.mainTopic.text}
-                date={(topicStorage === null)?"":topicStorage.mainTopic.topic}
-                id={topicStorage.mainTopic.title}
+                title={(activeTopic === null)?"":activeTopic.title}
+                description={(activeTopic === null)?"":activeTopic.text}
+                date={(activeTopic === null)?"":activeTopic.topic}
+                id={(activeTopic === null)?"":activeTopic.title}
               />
             </MDBox>
             </Grid>

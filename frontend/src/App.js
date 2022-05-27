@@ -63,10 +63,17 @@ export default function App() {
     .then((responseText) => {
       responseText = JSON.parse(responseText);
       var tmp = {topics: responseText.result, mainTopic:""};
-      var topicStorage = JSON.parse(localStorage.getItem('topics'));
+      var tmpActive = JSON.parse(localStorage.getItem('active-topics'));
+      var index = (tmpActive==null)?0:tmpActive.index;
+      tmpActive = tmp.topics[index];
+      tmpActive.index= index;
+      localStorage.setItem('topics', JSON.stringify(tmp));
+      localStorage.setItem('active-topics', JSON.stringify(tmpActive));
+      /*
       if(topicStorage==null){
         localStorage.setItem('topics', JSON.stringify(tmp));
       }
+      */
       setLoaded(true);
     })
     .catch((error) => {
@@ -147,6 +154,7 @@ export default function App() {
   );
 
   if(!loaded){
+    console.log("loaded");
     getTopics();
   }
 
