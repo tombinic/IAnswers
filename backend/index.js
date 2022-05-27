@@ -279,6 +279,28 @@ app.post('/topics', function(request , response){
 	})
 });
 
+app.get('/api/topics', (req, res) => {
+  var query = {};
+  const topics = mongoose.model('topics', topicsSchema);
+  topics.find(query, function(err, result)
+  {
+    if (err) throw err;
+      res.send(result);
+      console.log(result);
+  });
+});
+
+app.get('/api/:username', (req, res) => {
+  var username = req.params.username;
+
+  var query = {email : username};
+
+	User.find(query, function(err, result)
+	{
+		if (err) throw err;
+	    	res.send(result);
+	})
+});
 
 
 var save_session = function(request, email)

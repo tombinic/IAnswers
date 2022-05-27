@@ -30,7 +30,7 @@ function APIs() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Projects Table
+                  IAnswers APIs
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
