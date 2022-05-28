@@ -1,37 +1,29 @@
-//for express
 const qna = require('@tensorflow-models/qna');
 const tfjs = require('@tensorflow/tfjs');
 require ('@tensorflow/tfjs-backend-cpu');
 require ('@tensorflow/tfjs-backend-webgl');
 require('@tensorflow/tfjs-node');
+require('@tensorflow/tfjs-core');
 const mongoose = require('mongoose');
 const ObjectID = require('mongodb').ObjectID;
-require('@tensorflow/tfjs-core');
 const express = require('express');
-const app = express();
-const http = require('http').Server(app);
+const cors = require("cors");
+
 var MongoClient  = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/nlpUser";
-var modelPromise = {};
-var answer = null;
-const cors = require("cors");
-app.use(cors());
-
-//Body Parser Setup
 const bodyParser = require('body-parser');
 const path = require("path");
+const session = require("express-session");
+
+const app = express();
+var modelPromise = {};
+var answer = null;
+
+const http = require('http').Server(app);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'www')));
-//For session
-const session = require("express-session");
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true,
-  // proxy: true,
-  // cookie: { secure: true }
-}));
 
 mongoose.connect(url, function(err)
 {
@@ -63,32 +55,13 @@ const topicsSchema = mongoose.Schema({
 {
   collection: 'topics',
   versionKey: false
-
 });
 
 const User = mongoose.model('User', userSchema);
 const Topic = mongoose.model('topics', topicsSchema);
 
-// Listen to the required Port
 http.listen(3005, function () {
 	console.log('Server is running. Point your browser to: http://localhost:3005');
-});
-
-app.get('/checkLogin', function(request, response)
-{
-	if(!request.session.email)
-	{
-		response.send(JSON.stringify({
-			result: 'No Session'
-		}));
-	}
-	else
-	{
-		response.send(JSON.stringify({
-			result: 'Session Exists',
-			email: request.session.email
-		}));
-	}
 });
 
 app.post('/signup', function(request, response)
@@ -120,14 +93,13 @@ app.post('/signup', function(request, response)
 	var query = {email : email};
 	User.find(query, function(err, result)
 	{
-		if (err) throw err;
+		  if (err) throw err;
 
 	    if (typeof result !== 'undefined' && result.length > 0) {
 	    	response.send(JSON.stringify({
 				message: 'User already exists!'
 			}));
 		}
-
 		else
 		{
 			var userObj = new User(userData);
@@ -137,7 +109,6 @@ app.post('/signup', function(request, response)
             extra:data,
 								message: "Successful"
 					}));
-
 			});
 		}
 	});
@@ -160,7 +131,7 @@ app.post('/question', function(request, response)
   Topic.find(query, function(err, result) {
     if (err) throw err;
     if (typeof result !== 'undefined' && result.length > 0) {
-      async function process (a, b) {
+        async function process (a, b) {
         await loadModel();
         const answers = await modelPromise.findAnswers(a, b);
         response.send(JSON.stringify({
@@ -168,12 +139,10 @@ app.post('/question', function(request, response)
           answers: answers
         }));
       };
-	  console.log(result[0].text);
-
+  	  console.log(result[0].text);
       process(question, result[0].text);
-
     }
-    else{
+    else {
       response.send(JSON.stringify({message: 'Error'}));
     }
   });
@@ -184,21 +153,6 @@ app.post('/login', function(request, response)
 	response.setHeader('Content-Type', 'application/json');
 	var email = request.body.email;
 	var password = request.body.password;
-  	console.log(password);
-	// request.session.email = email;
-	if(request.body.email && request.body.password)
-	{
-		var userData = {
-			email: request.body.email,
-			password: request.body.password
-		}
-	}
-	else
-	{
-		response.send(JSON.stringify({
-			message: 'Invalid Data'
-		}));
-	}
 
 	var query = {email : email};
 
@@ -206,16 +160,14 @@ app.post('/login', function(request, response)
 	{
 		if (err) throw err;
 	    if (typeof result !== 'undefined' && result.length > 0) {
-		    if(result[0].password == password)
-		    {
-		    	save_session(request, email);
+		    if(result[0].password == password) {
 		    	response.send(JSON.stringify({
-		    		email: email,
-		    		name: result[0].name,
-            surname: result[0].surname,
-            motto: result[0].motto,
-					message: 'Successful'
-				}));
+    		    		email: email,
+    		    		name: result[0].name,
+                surname: result[0].surname,
+                motto: result[0].motto,
+    					  message: 'Successful'
+			    }));
 		    }
 		    else
 		    {
@@ -233,33 +185,10 @@ app.post('/login', function(request, response)
 	})
 });
 
-
-app.post('/topic', function(request , response){
-	response.setHeader('Content-Type', 'application/json');
-	var topic = request.body.title;
-  	console.log(title);
-	const topics = mongoose.model('topics', topicsSchema);
-	var query = {title : title};
-	topics.find(query, function(err, result)
-	{
-		if (err) throw err;
-	    if (typeof result !== 'undefined' && result.length > 0) {
-			response.send(JSON.stringify(result));
-		}
-		else
-		{
-			response.send(JSON.stringify({
-				message: 'No Such Topics'
-			}));
-		}
-	})
-});
-
 app.post('/topics', function(request , response){
 	response.setHeader('Content-Type', 'application/json');
 	var email = request.body.email;
 	var password = request.body.password;
-  	console.log(password);
 
 	var query = {};
 	const topics = mongoose.model('topics', topicsSchema);
@@ -267,8 +196,7 @@ app.post('/topics', function(request , response){
 	{
 		if (err) throw err;
 	    if (typeof result !== 'undefined' && result.length > 0) {
-			response.send(JSON.stringify({result , message: 'Successful' }));
-			console.log(result);
+			response.send(JSON.stringify({result, message: 'Successful' }));
 		}
 		else
 		{
@@ -285,8 +213,7 @@ app.get('/api/topics', (req, res) => {
   topics.find(query, function(err, result)
   {
     if (err) throw err;
-      res.send(result);
-      console.log(result);
+    res.send(result);
   }).select('-_id');
 });
 
@@ -296,8 +223,7 @@ app.get('/api/topics/titles', (req, res) => {
   topics.find(query, function(err, result)
   {
     if (err) throw err;
-      res.send(result);
-      console.log(result);
+    res.send(result);
   }).select('title -_id');
 });
 
@@ -307,11 +233,9 @@ app.get('/api/topics/texts', (req, res) => {
   topics.find(query, function(err, result)
   {
     if (err) throw err;
-      res.send(result);
-      console.log(result);
+    res.send(result);
   }).select('text -_id');
 });
-
 
 app.get('/api/:username', (req, res) => {
   var username = req.params.username;
@@ -321,12 +245,6 @@ app.get('/api/:username', (req, res) => {
 	User.find(query, function(err, result)
 	{
 		if (err) throw err;
-	    	res.send(result);
+	  res.send(result);
 	}).select('-_id');
 });
-
-
-var save_session = function(request, email)
-{
-	request.session.email = email;
-}

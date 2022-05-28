@@ -9,7 +9,6 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import QuestionCard from "examples/Cards/QuestionCard";
 import $ from 'jquery';
 
-
 const  Dashboard = forwardRef (( {  }, ref) => {
   var topicStorage = null;
 
@@ -19,12 +18,12 @@ const  Dashboard = forwardRef (( {  }, ref) => {
   const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState(null);
 
-
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
   }
 
   const sendQuestion = () => {
+
     setBtnLoaded(true);
 		fetch('http://localhost:3005/question',
 		{
@@ -35,37 +34,35 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 			},
 			method: 'POST',
 			credentials: 'same-origin',
-      body: JSON.stringify({subject: topicStorage.mainTopic.title, question: question})
+      body: JSON.stringify({subject: activeTopic.title, question: question})
 		})
 		.then((response) => response.text())
 		.then((responseText) => {
         responseText = JSON.parse(responseText);
-
+        console.log(responseText.answers[0].text);
+        alert(activeTopic.title);
         if(responseText.answers.length == 0) {
           setAnswer(null);
           setBtnLoaded(false);
         }
         else {
+
           setAnswer(responseText.answers[0].text);
-          var html = $( ("#" +topicStorage.mainTopic.title) ).html();
-          var newHtml = html.replace(''+responseText.answers[0].text, '<b><i>'+responseText.answers[0].text+'</i></b>');
-          $(("#" +topicStorage.mainTopic.title)).html(newHtml);
+          var html = $(("#" + activeTopic.title)).html();
+          var newHtml = html.replace('' + responseText.answers[0].text, '<b><i>'+responseText.answers[0].text+'</i></b>');
+          $(("#" + activeTopic.title)).html(newHtml);
           setBtnLoaded(false);
         }
 		});
 	}
 
   const changeTopic = () => {
-
     setLoaded(!loaded);
   }
 
   topicStorage = JSON.parse(localStorage.getItem('topics'));
   var activeTopic = JSON.parse(localStorage.getItem('active-topics'));
   var topicsList = [];
-
-  //console.log(activeTopic);
-  //console.log(topicStorage);
 
   topicsList = (topicStorage == null)?null:topicStorage.topics.map((element, index) =>
   <Grid item xs={12} md={6} lg={4}>
@@ -95,7 +92,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
@@ -106,15 +102,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                   image ={(activeTopic === null)?"":activeTopic.blob}
                   reload={setReload}
                 />
-                <Grid item xs={12} md={6} lg={12}>
-                  <MDBox py={3} mb={3}>
-                    <QuestionCard
-                      onClick={sendQuestion}
-                      btnState={btnLoaded}
-                      handleQuestionChange={handleQuestionChange}
-                    />
-                  </MDBox>
-                </Grid>
               </MDBox>
             </Grid>
 
@@ -122,6 +109,7 @@ const  Dashboard = forwardRef (( {  }, ref) => {
             <MDBox mb={3}>
               <ReportsLineChart
                 color="success"
+                id={(activeTopic === null)?"":activeTopic.title}
                 title={(activeTopic === null)?"":activeTopic.title}
                 description={(activeTopic === null)?"":activeTopic.text}
                 date={(activeTopic === null)?"":activeTopic.topic}
@@ -131,6 +119,15 @@ const  Dashboard = forwardRef (( {  }, ref) => {
           </Grid>
         </MDBox>
       </MDBox>
+      <Grid item xs={12} md={6} lg={12}>
+        <MDBox mb={3} >
+          <QuestionCard
+            onClick={sendQuestion}
+            btnState={btnLoaded}
+            handleQuestionChange={handleQuestionChange}
+          />
+        </MDBox>
+      </Grid>
       <Footer />
     </DashboardLayout>
   );

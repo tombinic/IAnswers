@@ -69,11 +69,6 @@ export default function App() {
       tmpActive.index= index;
       localStorage.setItem('topics', JSON.stringify(tmp));
       localStorage.setItem('active-topics', JSON.stringify(tmpActive));
-      /*
-      if(topicStorage==null){
-        localStorage.setItem('topics', JSON.stringify(tmp));
-      }
-      */
       setLoaded(true);
     })
     .catch((error) => {

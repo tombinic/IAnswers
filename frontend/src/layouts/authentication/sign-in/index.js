@@ -53,7 +53,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
         }
         else
         {
-          alert("Wrong credentials!");
+          alert(responseText.message);
         }
       })
       .catch((error) => {
