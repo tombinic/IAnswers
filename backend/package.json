@@ -10,6 +10,7 @@
     "@tensorflow/tfjs-converter": "^3.15.0",
     "@tensorflow/tfjs-core": "^3.15.0",
     "@tensorflow/tfjs-node": "^3.15.0",
+    "@tensorflow/tfjs-node-gpu": "^3.18.0",
     "body-parser": "1.18.2",
     "connect-mongodb-session": "^3.1.1",
     "cors": "^2.8.5",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "concurrently": "3.5.0"
   },
+
   "scripts": {
     "start": "concurrently \"node server.js\" \"cd client && npm start\" \"mongod --quiet\"",
     "test": "echo \"Error: no test specified\" && exit 1"

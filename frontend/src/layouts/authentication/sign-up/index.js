@@ -13,48 +13,52 @@ import bgImage from "assets/images/bg1.gif";
 
 const Cover = forwardRef(( { setAuth }, ref) => {
   const [pw, setPw] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
   const [name, setName] = useState(null);
   const [surname, setSurname] = useState(null);
   const [motto, setMotto] = useState(null);
 
   const handleOnSignUp = (e) => {
+    if (pw === null || username === null || name === null || surname === null || motto === null) {
+      alert("Please insert all data");
+    }
+    else {
+      let hash = sha3_512(pw);
 
-    let hash = sha3_512(pw);
-
-    e.preventDefault();
-    fetch('http://localhost:3005/signup',
-      {
-         headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json',
-         },
-         method: 'POST',
-         credentials: 'same-origin',
-         body: JSON.stringify({password: hash, email: email, name: name, surname: surname, motto: motto})
-      })
-      .then((response) => response.text())
-      .then((responseText) => {
-        responseText = JSON.parse(responseText);
-        if(responseText.message === "Successful")
+      e.preventDefault();
+      fetch('http://localhost:3005/signup',
         {
-          console.log(responseText.extra);
-          var infos = {success : true, name: responseText.extra.name, surname: responseText.extra.surname, email: responseText.extra.email, motto: responseText.extra.motto};
-          localStorage.setItem('auth', JSON.stringify(infos));
-          setAuth(infos);
-        }
-        else
-        {
-          alert(responseText.message);
-        }
-      })
-      .catch((error) => {
-          console.error("Error in login API: " + error);
-      });
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json',
+           },
+           method: 'POST',
+           credentials: 'same-origin',
+           body: JSON.stringify({password: hash, username: username, name: name, surname: surname, motto: motto})
+        })
+        .then((response) => response.text())
+        .then((responseText) => {
+          responseText = JSON.parse(responseText);
+          if(responseText.message === "Successful")
+          {
+            console.log(responseText.extra);
+            var infos = {success : true, name: responseText.extra.name, surname: responseText.extra.surname, username: responseText.extra.username, motto: responseText.extra.motto};
+            localStorage.setItem('auth', JSON.stringify(infos));
+            setAuth(infos);
+          }
+          else
+          {
+            alert(responseText.message);
+          }
+        })
+        .catch((error) => {
+            console.error("Error in login API: " + error);
+        });
+    }
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handleNameChange = (e) => {
@@ -104,7 +108,7 @@ const Cover = forwardRef(( { setAuth }, ref) => {
               <MDInput type="text" label="Surname" variant="standard" fullWidth onChange={(e) => handleSurnameChange(e)}/>
             </MDBox>
             <MDBox mb={1}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth onChange={(e) => handleEmailChange(e)}/>
+              <MDInput type="username" label="Username" variant="standard" fullWidth onChange={(e) => handleUsernameChange(e)}/>
             </MDBox>
             <MDBox mb={1}>
               <MDInput type="password" label="Password" variant="standard" fullWidth onChange={(e) => handlePasswordChange(e)}/>

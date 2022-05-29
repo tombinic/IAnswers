@@ -40,7 +40,7 @@ export default function App() {
   const [loaded,setLoaded] = useState(false);
 
   const [auth, setAuth] = useState({success: (infos==null)?false:infos.success,
-                                    email : (infos==null)?"":infos.email,
+                                    username : (infos==null)?"":infos.username,
                                     name: (infos==null)?"":infos.name,
                                     surname:(infos==null)?"":infos.surname,
                                     motto:(infos==null)?"":infos.motto,
@@ -149,7 +149,6 @@ export default function App() {
   );
 
   if(!loaded){
-    console.log("loaded");
     getTopics();
   }
 

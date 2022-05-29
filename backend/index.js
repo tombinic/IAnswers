@@ -1,22 +1,15 @@
 const qna = require('@tensorflow-models/qna');
-const tfjs = require('@tensorflow/tfjs');
-require ('@tensorflow/tfjs-backend-cpu');
-require ('@tensorflow/tfjs-backend-webgl');
 require('@tensorflow/tfjs-node');
-require('@tensorflow/tfjs-core');
 const mongoose = require('mongoose');
-const ObjectID = require('mongodb').ObjectID;
 const express = require('express');
 const cors = require("cors");
-
-var MongoClient  = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/nlpUser";
+const url = "mongodb://localhost:27017/IAnswers";
 const bodyParser = require('body-parser');
 const path = require("path");
 const session = require("express-session");
-
+const ObjectID = require('mongodb').ObjectID;
 const app = express();
-var modelPromise = {};
+let modelPromise = {};
 var answer = null;
 
 const http = require('http').Server(app);
@@ -36,12 +29,12 @@ const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: String,
     surname: String,
-    email: String,
+    username: String,
     password: String,
     motto: String,
 },
 {
-  collection: 'User',
+  collection: 'users',
   versionKey: false
 });
 
@@ -57,40 +50,36 @@ const topicsSchema = mongoose.Schema({
   versionKey: false
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('users', userSchema);
 const Topic = mongoose.model('topics', topicsSchema);
 
 http.listen(3005, function () {
+	modelPromise = qna.load({modelUrl: 'file://mobilebert_1/model.json'});
 	console.log('Server is running. Point your browser to: http://localhost:3005');
 });
+
+const process = async (question, passage) => {
+  const model = await modelPromise;
+  answers = await model.findAnswers(question, passage);
+};
 
 app.post('/signup', function(request, response)
 {
 	response.setHeader('Content-Type', 'application/json');
 
 	var name = request.body.name;
-	var email = request.body.email;
+	var username = request.body.username;
 	var password = request.body.password;
   var motto = request.body.motto;
-
-	if(request.body.email && request.body.password && request.body.name)
-	{
 		var userData = {
 			_id: new ObjectID(),
       password: request.body.password,
-			email: request.body.email,
+			username: request.body.username,
 			name: request.body.name,
       surname: request.body.surname,
       motto: request.body.motto
-		}
 	}
-	else
-	{
-		response.send(JSON.stringify({
-			message: 'Invalid Data'
-		}));
-	}
-	var query = {email : email};
+	var query = {username : username};
 	User.find(query, function(err, result)
 	{
 		  if (err) throw err;
@@ -106,8 +95,8 @@ app.post('/signup', function(request, response)
 			userObj.save(function(error,data)
 			{
 					response.send(JSON.stringify({
-            extra:data,
-								message: "Successful"
+            extra: data,
+						message: "Successful"
 					}));
 			});
 		}
@@ -122,28 +111,18 @@ app.post('/question', function(request, response)
 
   console.log(question + " " + subject);
 
-  async function loadModel()  {
-    modelPromise = await qna.load();
-    return modelPromise;
-  };
-
   var query = {title : subject};
-  Topic.find(query, function(err, result) {
+  Topic.find(query, async function(err, result) {
     if (err) throw err;
     if (typeof result !== 'undefined' && result.length > 0) {
-        async function process (a, b) {
-        await loadModel();
-        const answers = await modelPromise.findAnswers(a, b);
-        response.send(JSON.stringify({
-          message: 'Successful',
-          answers: answers
-        }));
-      };
-  	  console.log(result[0].text);
-      process(question, result[0].text);
+      await process(question, result[0].text);
+			response.send(JSON.stringify({
+				message: 'Successful',
+				answers: answers
+			}));
     }
     else {
-      response.send(JSON.stringify({message: 'Error'}));
+      response.send(JSON.stringify({message: 'Error', answers: answers}));
     }
   });
 });
@@ -151,10 +130,10 @@ app.post('/question', function(request, response)
 app.post('/login', function(request, response)
 {
 	response.setHeader('Content-Type', 'application/json');
-	var email = request.body.email;
+	var username = request.body.username;
 	var password = request.body.password;
 
-	var query = {email : email};
+	var query = {username : username};
 
 	User.find(query, function(err, result)
 	{
@@ -162,7 +141,7 @@ app.post('/login', function(request, response)
 	    if (typeof result !== 'undefined' && result.length > 0) {
 		    if(result[0].password == password) {
 		    	response.send(JSON.stringify({
-    		    		email: email,
+    		    		username: username,
     		    		name: result[0].name,
                 surname: result[0].surname,
                 motto: result[0].motto,
@@ -187,7 +166,7 @@ app.post('/login', function(request, response)
 
 app.post('/topics', function(request , response){
 	response.setHeader('Content-Type', 'application/json');
-	var email = request.body.email;
+	var username = request.body.username;
 	var password = request.body.password;
 
 	var query = {};
@@ -240,7 +219,7 @@ app.get('/api/topics/texts', (req, res) => {
 app.get('/api/:username', (req, res) => {
   var username = req.params.username;
 
-  var query = {email : username};
+  var query = {username : username};
 
 	User.find(query, function(err, result)
 	{

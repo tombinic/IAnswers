@@ -10,7 +10,7 @@ import LogoUser from "assets/images/small-logos/user.svg";
 
 export default function data() {
     const user = JSON.parse(localStorage.getItem('auth'));
-    var userApi = "http://localhost:3005/api/" + user.email;
+    var userApi = "http://localhost:3005/api/" + user.username;
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />

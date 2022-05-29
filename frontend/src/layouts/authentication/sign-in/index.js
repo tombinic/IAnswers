@@ -24,7 +24,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
 
   const [rememberMe, setRememberMe] = useState(false);
   const [pw, setPw] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -40,14 +40,14 @@ const Basic = forwardRef(( { setAuth }, ref) => {
          },
          method: 'POST',
          credentials: 'same-origin',
-         body: JSON.stringify({email: email, password: hash})
+         body: JSON.stringify({username: username, password: hash})
       })
       .then((response) => response.text())
       .then((responseText) => {
         responseText = JSON.parse(responseText);
         if(responseText.message === "Successful")
         {
-          var infos = {success : true, email : responseText.email, name : responseText.name, surname : responseText.surname, motto: responseText.motto};
+          var infos = {success : true, username : responseText.username, name : responseText.name, surname : responseText.surname, motto: responseText.motto};
           localStorage.setItem('auth', JSON.stringify(infos));
           setAuth(infos);
         }
@@ -61,8 +61,8 @@ const Basic = forwardRef(( { setAuth }, ref) => {
       });
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -102,7 +102,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth onChange={(e) => handleEmailChange(e)}/>
+              <MDInput type="username" label="Username" fullWidth onChange={(e) => handleUsernameChange(e)}/>
             </MDBox>
             <MDBox mb={2}>
               <MDInput type="password" label="Password" fullWidth onChange={(e) => handlePasswordChange(e)}/>

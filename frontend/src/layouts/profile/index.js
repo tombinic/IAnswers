@@ -38,7 +38,6 @@ const Overview = forwardRef(( { auth }, ref) => {
       <MDBox mb={2} />
       <Header auth={auth}>
         <MDBox mt={5} mb={12}>
-          <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={12} sx={{ display: "flex" }}>
               <ProfileInfoCard
                 title="profile information"
@@ -46,13 +45,12 @@ const Overview = forwardRef(( { auth }, ref) => {
                 info={{
                   surname: auth.surname,
                   name: auth.name,
-                  email: auth.email,
+                  username: auth.username,
                   location: "ITA",
                 }}
-                action={{ route: "", tooltip: "Edit Profile" }}
+
                 shadow={false}
               />
-            </Grid>
           </Grid>
         </MDBox>
         <MDBox pt={2} px={2} lineHeight={1.25}>

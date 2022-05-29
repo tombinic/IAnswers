@@ -10,7 +10,7 @@ import MDTypography from "components/MDTypography";
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 
-function ProfileInfoCard({ title, description, info, social, action, shadow }) {
+function ProfileInfoCard({ title, description, info, social, shadow }) {
   const labels = [];
   const values = [];
   const { socialMediaColors } = colors;
@@ -45,11 +45,6 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           {title}
-        </MDTypography>
-        <MDTypography component={Link} to={action.route} variant="body2" color="secondary">
-          <Tooltip title={action.tooltip} placement="top">
-            <Icon>edit</Icon>
-          </Tooltip>
         </MDTypography>
       </MDBox>
       <MDBox p={2}>

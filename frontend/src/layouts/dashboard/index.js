@@ -39,14 +39,15 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		.then((response) => response.text())
 		.then((responseText) => {
         responseText = JSON.parse(responseText);
-        console.log(responseText.answers[0].text);
-        alert(activeTopic.title);
+
+        //alert(activeTopic.title);
         if(responseText.answers.length == 0) {
           setAnswer(null);
           setBtnLoaded(false);
         }
         else {
-
+          var old_hmtl =  (activeTopic.text);
+          $(("#" + activeTopic.title)).html(old_hmtl);
           setAnswer(responseText.answers[0].text);
           var html = $(("#" + activeTopic.title)).html();
           var newHtml = html.replace('' + responseText.answers[0].text, '<b><i>'+responseText.answers[0].text+'</i></b>');

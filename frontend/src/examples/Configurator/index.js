@@ -127,7 +127,7 @@ function Configurator() {
 
       <MDBox pt={0.5} pb={3} px={3}>
         <MDBox>
-          <MDTypography variant="h6">Sidenav Colors</MDTypography>
+          <MDTypography variant="h6">System Colors</MDTypography>
 
           <MDBox mb={0.5}>
             {sidenavColors.map((color) => (
