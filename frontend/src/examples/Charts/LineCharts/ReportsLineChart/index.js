@@ -14,11 +14,36 @@ import MDTypography from "components/MDTypography";
 
 function ReportsLineChart({ id, title, description, date , image,reload}) {
   var newImage = (image==null)?"":image;
+  var content = null;
+
+  const myComponent = {
+      width: '100%',
+      height: '200px',
+      overflow: 'scroll'
+  };
+
+  if(image != null) {
+    content= (
+      <div id={id}>
+        {description}
+      </div>
+    );
+  }
+  else {
+    content = (
+      <div id={id} style={myComponent}>
+        {description}
+      </div>
+    );
+  }
 
   function useForceUpdate(){
     const [value, setValue] = useState(0);
     return () => setValue(value => value + 1);
 }
+
+
+
 
   return (
     <Card sx={{ height: "100%"}}>
@@ -31,7 +56,8 @@ function ReportsLineChart({ id, title, description, date , image,reload}) {
             {title}
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
-            <div id={id} >{description}</div>
+    {content}
+
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">

@@ -9,7 +9,10 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import QuestionCard from "examples/Cards/QuestionCard";
 import $ from 'jquery';
 
+
 const  Dashboard = forwardRef (( {  }, ref) => {
+
+
   var topicStorage = null;
 
   const [reload, setReload] = useState(false);
@@ -107,7 +110,9 @@ const  Dashboard = forwardRef (( {  }, ref) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={8}>
+
             <MDBox mb={3}>
+
               <ReportsLineChart
                 color="success"
                 id={(activeTopic === null)?"":activeTopic.title}
@@ -115,8 +120,11 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                 description={(activeTopic === null)?"":activeTopic.text}
                 date={(activeTopic === null)?"":activeTopic.topic}
               />
+
             </MDBox>
+
             </Grid>
+
           </Grid>
         </MDBox>
       </MDBox>
