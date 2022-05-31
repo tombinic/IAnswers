@@ -1,8 +1,7 @@
-import { useState,createContext, useContext, forwardRef} from "react";
+import { useState, forwardRef} from "react";
 import { Link } from "react-router-dom";
 import { sha3_512 } from 'js-sha3';
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "components/Box";
 import Typography from "components/Typography";
 import Input from "components/Input";
@@ -22,7 +21,7 @@ const Cover = forwardRef(( { setAuth }, ref) => {
 
   const handleOnSignUp = (e) => {
     if (pw === null || username === null || name === null || surname === null || motto === null ||
-        pw == "" || username == "" || name == "null" || surname == "" || motto == "") {
+        pw === "" || username === "" || name === "" || surname === "" || motto === "") {
         alert("Please insert all data");
     }
     else {

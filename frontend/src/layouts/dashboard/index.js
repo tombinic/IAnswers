@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import { useState, forwardRef} from "react";
+import { useState } from "react";
 import Box from "components/Box";
 import DashboardLayout from "objects/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "objects/DashboardNavbar";
@@ -9,10 +9,7 @@ import ComplexStatisticsCard from "objects/Cards/MainCard";
 import QuestionCard from "objects/Cards/QuestionCard";
 import $ from 'jquery';
 
-
-const  Dashboard = forwardRef (( {  }, ref) => {
-
-
+function Dashboard() {
   var topicStorage = null;
 
   const [reload, setReload] = useState(false);
@@ -26,7 +23,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
   }
 
   const sendQuestion = () => {
-
     setBtnLoaded(true);
 		fetch('http://localhost:3005/question',
 		{
@@ -43,11 +39,8 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		.then((responseText) => {
         var old_hmtl  =  (activeTopic.text);
         $(("#" + activeTopic.title)).html(old_hmtl);
-
         responseText = JSON.parse(responseText);
-
-        //alert(activeTopic.title);
-        if(responseText.answers.length == 0) {
+        if(responseText.answers.length === 0) {
           setAnswer(null);
           setBtnLoaded(false);
           alert("No answers found for : " +question );
@@ -110,11 +103,8 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                 />
               </Box>
             </Grid>
-
             <Grid item xs={12} md={6} lg={8}>
-
             <Box mb={3}>
-
               <TopicViewCard
                 color="success"
                 id={(activeTopic === null)?"":activeTopic.title}
@@ -122,11 +112,8 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                 description={(activeTopic === null)?"":activeTopic.text}
                 date={(activeTopic === null)?"":activeTopic.topic}
               />
-
             </Box>
-
             </Grid>
-
           </Grid>
         </Box>
       </Box>
@@ -142,6 +129,6 @@ const  Dashboard = forwardRef (( {  }, ref) => {
       <Footer />
     </DashboardLayout>
   );
-});
+}
 
 export default Dashboard;

@@ -1,13 +1,8 @@
 import { useState, useEffect } from "react";
-
-import GitHubButton from "react-github-btn";
 import Divider from "@mui/material/Divider";
 import Switch from "@mui/material/Switch";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import Box from "components/Box";
 import Typography from "components/Typography";
 import Button from "components/Button";

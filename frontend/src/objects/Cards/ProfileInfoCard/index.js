@@ -1,20 +1,12 @@
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
-import Tooltip from "@mui/material/Tooltip";
-import Icon from "@mui/material/Icon";
 import Box from "components/Box";
 import Typography from "components/Typography";
-
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
 
 function ProfileProfileInfoCard({ title, description, info, social, shadow }) {
   const labels = [];
   const values = [];
-  const { socialMediaColors } = colors;
-  const { size } = typography;
 
   Object.keys(info).forEach((el) => {
     if (el.match(/[A-Z\s]+/)) {

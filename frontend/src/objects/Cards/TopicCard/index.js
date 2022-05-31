@@ -11,10 +11,8 @@ import Avatar from "components/Avatar";
 function TopicCard({ image, label, title, description, action, authors, index }) {
   const updateMainTopic = () => {
     var topics = JSON.parse(localStorage.getItem('topics'));
-    var activeTopic = topics.topics[index];
     topics.mainTopic = topics.topics[index];
     topics.mainTopic.index = index;
-    //localStorage.setItem('topics', JSON.stringify(topics));
     localStorage.setItem('active-topics', JSON.stringify(topics.mainTopic));
   }
   const renderAuthors = authors.map(({ image: media, name }) => (

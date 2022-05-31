@@ -8,13 +8,10 @@ import Typography from "components/Typography";
 
 import {
   useMaterialUIController,
-  setMiniSidenav,
-  setTransparentSidenav,
-  setWhiteSidenav,
 } from "context";
 
 const ComplexStatisticsCard = forwardRef (({ reload, color, title, count, subtitle, icon, index}, ref ) => {
-const [controller, dispatch] = useMaterialUIController();
+const [controller] = useMaterialUIController();
 const { sidenavColor } = controller;
 const changeTopic = () => {
   var topics = JSON.parse(localStorage.getItem('topics'));

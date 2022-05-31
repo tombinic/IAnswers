@@ -2,10 +2,6 @@ import { useState, useEffect , forwardRef} from "react";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Icon from "@mui/material/Icon";
 import Box from "components/Box";
 import Typography from "components/Typography";
 import Avatar from "components/Avatar";
@@ -17,7 +13,6 @@ import backgroundImage from "assets/images/bkg.gif";
 
 const Header = forwardRef(( { children, auth }, ref) => {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
-  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     function handleTabsOrientation() {
@@ -32,8 +27,6 @@ const Header = forwardRef(( { children, auth }, ref) => {
 
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
-
-  const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
   return (
     <Box position="relative" mb={5}>
