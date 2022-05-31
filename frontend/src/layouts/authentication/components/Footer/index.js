@@ -2,10 +2,9 @@ import PropTypes from "prop-types";
 
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
 
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import Box from "components/Box";
+import Typography from "components/Typography";
 
 import typography from "assets/theme/base/typography";
 
@@ -13,9 +12,9 @@ function Footer({ light }) {
   const { size } = typography;
 
   return (
-    <MDBox position="absolute" width="100%" bottom={0} py={4}>
+    <Box position="absolute" width="100%" bottom={0} py={4}>
       <Container>
-        <MDBox
+        <Box
           width="100%"
           display="flex"
           flexDirection={{ xs: "column", lg: "row" }}
@@ -23,7 +22,7 @@ function Footer({ light }) {
           alignItems="center"
           px={1.5}
         >
-          <MDBox
+          <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -33,12 +32,12 @@ function Footer({ light }) {
           >
             {new Date().getFullYear()},
             <Link href="https://www.creative-tim.com/" target="_blank">
-              <MDTypography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
+              <Typography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
                 Tombini Nicolò & Francesco Cavalieri
-              </MDTypography>
+              </Typography>
             </Link>
-          </MDBox>
-          <MDBox
+          </Box>
+          <Box
             component="ul"
             sx={({ breakpoints }) => ({
               display: "flex",
@@ -55,10 +54,10 @@ function Footer({ light }) {
               },
             })}
           >
-          </MDBox>
-        </MDBox>
+          </Box>
+        </Box>
       </Container>
-    </MDBox>
+    </Box>
   );
 }
 

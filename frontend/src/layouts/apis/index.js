@@ -1,19 +1,16 @@
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+import Box from "components/Box";
+import Typography from "components/Typography";
+import DashboardLayout from "objects/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "objects/DashboardNavbar";
+import Footer from "objects/Footer";
+import DataTable from "objects/Tables/DataTable";
 
 import projectsTableData from "layouts/apis/data/projectsTableData";
 
 import {
   useMaterialUIController,
-  setMiniSidenav,
-  setTransparentSidenav,
-  setWhiteSidenav,
 } from "context";
 
 function APIs() {
@@ -23,11 +20,11 @@ function APIs() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
+      <Box pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card>
-              <MDBox
+              <Box
                 mx={2}
                 mt={-3}
                 py={3}
@@ -37,11 +34,11 @@ function APIs() {
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
+                <Typography variant="h6" color="white">
                   IAnswers APIs
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
+                </Typography>
+              </Box>
+              <Box pt={3}>
                 <DataTable
                   table={{ columns: pColumns, rows: pRows }}
                   isSorted={false}
@@ -49,11 +46,11 @@ function APIs() {
                   showTotalEntries={false}
                   noEndBorder
                 />
-              </MDBox>
+              </Box>
             </Card>
           </Grid>
         </Grid>
-      </MDBox>
+      </Box>
       <Footer />
     </DashboardLayout>
   );

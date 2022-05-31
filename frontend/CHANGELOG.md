@@ -5,7 +5,7 @@
 ### Bug fixing
 
 - Momoized the context provider values
-- Fix the conditionally used of useContext for MDPagination component
+- Fix the conditionally used of useContext for Pagination component
 - Fix the import/no-anonymouse-default-export
 
 ### Major style changes
@@ -76,24 +76,24 @@
 - MDAlert
 - MDAvatar
 - MDBadge
-- MDBox
-- MDButton
-- MDInput
-- MDPagination
+- Box
+- Button
+- Input
+- Pagination
 - MDProgress
 - MDSnackbar
-- MDTypography
+- Typography
 - Breadcrumbs
 - Cards
   - BlogCards
     - SimpleBlogCard
-  - InfoCards
-    - DefaultInfoCard
-    - ProfileInfoCard
+  - ProfileInfoCards
+    - DefaultProfileInfoCard
+    - ProfileProfileInfoCard
   - MasterCard
   - ProjectCards
-    - DefaultProjectCard
-  - StatisticsCards
+    - TopicCard
+  - MainCard
     - ComplexStatisticsCard
 - Charts
   - BarCharts
@@ -107,7 +107,7 @@
     - DefaultLineChart
     - GradientLineChart
     - ProgressLineChart
-    - ReportsLineChart
+    - TopicViewCard
   - MixedChart
   - PieChart
   - PolarChart
@@ -121,7 +121,7 @@
   - PageLayout
 - Lists
   - ProfilesList
-- Navbars
+- DashboardNavbar
   - DashboardNavbar
   - DefaultNavbar
 - Sidenav

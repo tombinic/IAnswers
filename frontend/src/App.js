@@ -5,9 +5,9 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-import MDBox from "components/MDBox";
-import Sidenav from "examples/Sidenav";
-import Configurator from "examples/Configurator";
+import Box from "components/Box";
+import Sidenav from "objects/Sidenav";
+import Configurator from "objects/Configurator";
 import SignIn from "layouts/authentication/sign-in";
 import Dashboard from "layouts/dashboard";
 import SignUp from "layouts/authentication/sign-up";
@@ -125,7 +125,7 @@ export default function App() {
   }
 
   const configsButton = (
-    <MDBox
+    <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -145,7 +145,7 @@ export default function App() {
       <Icon fontSize="small" color="inherit">
         settings
       </Icon>
-    </MDBox>
+    </Box>
   );
 
   if(!loaded){

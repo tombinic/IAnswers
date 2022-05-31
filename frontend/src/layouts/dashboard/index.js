@@ -1,12 +1,12 @@
 import Grid from "@mui/material/Grid";
 import { useState, forwardRef} from "react";
-import MDBox from "components/MDBox";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import QuestionCard from "examples/Cards/QuestionCard";
+import Box from "components/Box";
+import DashboardLayout from "objects/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "objects/DashboardNavbar";
+import Footer from "objects/Footer";
+import TopicViewCard from "objects/Cards/TopicViewCard";
+import ComplexStatisticsCard from "objects/Cards/MainCard";
+import QuestionCard from "objects/Cards/QuestionCard";
 import $ from 'jquery';
 
 
@@ -41,19 +41,21 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 		})
 		.then((response) => response.text())
 		.then((responseText) => {
+        var old_hmtl  =  (activeTopic.text);
+        $(("#" + activeTopic.title)).html(old_hmtl);
+
         responseText = JSON.parse(responseText);
 
         //alert(activeTopic.title);
         if(responseText.answers.length == 0) {
           setAnswer(null);
           setBtnLoaded(false);
+          alert("No answers found for : " +question );
         }
         else {
-          var old_hmtl =  (activeTopic.text);
-          $(("#" + activeTopic.title)).html(old_hmtl);
           setAnswer(responseText.answers[0].text);
           var html = $(("#" + activeTopic.title)).html();
-          var newHtml = html.replace('' + responseText.answers[0].text, '<b><i>'+responseText.answers[0].text+'</i></b>');
+          var newHtml = html.replace('' + responseText.answers[0].text, '<h1>'+responseText.answers[0].text+'</h1>');
           $(("#" + activeTopic.title)).html(newHtml);
           setBtnLoaded(false);
         }
@@ -70,7 +72,7 @@ const  Dashboard = forwardRef (( {  }, ref) => {
 
   topicsList = (topicStorage == null)?null:topicStorage.topics.map((element, index) =>
   <Grid item xs={12} md={6} lg={4}>
-    <MDBox mb={1.5}>
+    <Box mb={1.5}>
    <ComplexStatisticsCard
       color="success"
       icon={element.icon}
@@ -84,36 +86,36 @@ const  Dashboard = forwardRef (( {  }, ref) => {
       topics = {topicStorage.topics}
       reload = {changeTopic}
     />
-    </MDBox>
+    </Box>
   </Grid>);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
+      <Box py={3}>
         <Grid container spacing={3}>
             {topicsList}
         </Grid>
-        <MDBox mt={4.5}>
+        <Box mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
+              <Box mb={3}>
+                <TopicViewCard
                   color="success"
                   title={(activeTopic === null)?"":activeTopic.title}
                   description={(activeTopic === null)?"":activeTopic.title}
-                  date={(activeTopic === null)?"":activeTopic.title}
+                  subtitle={(activeTopic === null)?"":activeTopic.title}
                   image ={(activeTopic === null)?"":activeTopic.blob}
                   reload={setReload}
                 />
-              </MDBox>
+              </Box>
             </Grid>
 
             <Grid item xs={12} md={6} lg={8}>
 
-            <MDBox mb={3}>
+            <Box mb={3}>
 
-              <ReportsLineChart
+              <TopicViewCard
                 color="success"
                 id={(activeTopic === null)?"":activeTopic.title}
                 title={(activeTopic === null)?"":activeTopic.title}
@@ -121,21 +123,21 @@ const  Dashboard = forwardRef (( {  }, ref) => {
                 date={(activeTopic === null)?"":activeTopic.topic}
               />
 
-            </MDBox>
+            </Box>
 
             </Grid>
 
           </Grid>
-        </MDBox>
-      </MDBox>
+        </Box>
+      </Box>
       <Grid item xs={12} md={6} lg={12}>
-        <MDBox mb={3} >
+        <Box mb={3} >
           <QuestionCard
             onClick={sendQuestion}
             btnState={btnLoaded}
             handleQuestionChange={handleQuestionChange}
           />
-        </MDBox>
+        </Box>
       </Grid>
       <Footer />
     </DashboardLayout>

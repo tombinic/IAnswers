@@ -1,32 +1,24 @@
-import { useState,createContext, useContext, forwardRef} from "react";
+import { useState, forwardRef} from "react";
 import { sha3_512 } from 'js-sha3';
-import { Link , Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link  } from "react-router-dom";
 
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
-
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
-
+import Box from "components/Box";
+import Typography from "components/Typography";
+import Input from "components/Input";
+import Button from "components/Button";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import bgImage from "assets/images/bg.gif";
 
 const Basic = forwardRef(( { setAuth }, ref) => {
-  const navigate = useNavigate();
 
-  const [rememberMe, setRememberMe] = useState(false);
   const [pw, setPw] = useState(null);
   const [username, setUsername] = useState(null);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const handleOnLogin = (e) => {
     let hash = sha3_512(pw);
@@ -72,7 +64,7 @@ const Basic = forwardRef(( { setAuth }, ref) => {
   return (
     <BasicLayout image={bgImage}>
       <Card>
-        <MDBox
+        <Box
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
@@ -83,39 +75,39 @@ const Basic = forwardRef(( { setAuth }, ref) => {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+          <Typography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
-          </MDTypography>
+          </Typography>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={3}>
-              <MDTypography component={MuiLink} href="https://github.com/nicolotombini" variant="body1" color="white">
+              <Typography component={MuiLink} href="https://github.com/nicolotombini" variant="body1" color="white">
                 <GitHubIcon color="inherit" />
-              </MDTypography>
+              </Typography>
             </Grid>
             <Grid item xs={3}>
-              <MDTypography component={MuiLink} href="https://www.linkedin.com/in/nicol%C3%B2-tombini-124b52235/" variant="body1" color="white">
+              <Typography component={MuiLink} href="https://www.linkedin.com/in/nicol%C3%B2-tombini-124b52235/" variant="body1" color="white">
                 <LinkedInIcon color="inherit" />
-              </MDTypography>
+              </Typography>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <MDInput type="username" label="Username" fullWidth onChange={(e) => handleUsernameChange(e)}/>
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth onChange={(e) => handlePasswordChange(e)}/>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth onClick={(e) => handleOnLogin(e)}>
+        </Box>
+        <Box pt={4} pb={3} px={3}>
+          <Box component="form" role="form">
+            <Box mb={2}>
+              <Input type="username" label="Username" fullWidth onChange={(e) => handleUsernameChange(e)}/>
+            </Box>
+            <Box mb={2}>
+              <Input type="password" label="Password" fullWidth onChange={(e) => handlePasswordChange(e)}/>
+            </Box>
+            <Box mt={4} mb={1}>
+              <Button variant="gradient" color="info" fullWidth onClick={(e) => handleOnLogin(e)}>
                 sign in
-              </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
+              </Button>
+            </Box>
+            <Box mt={3} mb={1} textAlign="center">
+              <Typography variant="button" color="text">
                 Don&apos;t have an account?{" "}
-                <MDTypography
+                <Typography
                   component={Link}
                   to="/authentication/sign-up"
                   variant="button"
@@ -124,11 +116,11 @@ const Basic = forwardRef(( { setAuth }, ref) => {
                   textGradient
                 >
                   Sign up
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+                </Typography>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </Card>
     </BasicLayout>
   );

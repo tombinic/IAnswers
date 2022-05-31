@@ -4,27 +4,19 @@
   "description": "A chat application similar to Slack",
   "dependencies": {
     "@tensorflow-models/qna": "^1.0.1",
-    "@tensorflow/tfjs": "^3.15.0",
-    "@tensorflow/tfjs-backend-cpu": "^3.15.0",
-    "@tensorflow/tfjs-backend-webgl": "^3.15.0",
     "@tensorflow/tfjs-converter": "^3.15.0",
     "@tensorflow/tfjs-core": "^3.15.0",
     "@tensorflow/tfjs-node": "^3.15.0",
-    "@tensorflow/tfjs-node-gpu": "^3.18.0",
     "body-parser": "1.18.2",
-    "connect-mongodb-session": "^3.1.1",
     "cors": "^2.8.5",
     "express": "^4.16.3",
     "express-session": "1.15.6",
     "mongodb": "^3.7.3",
-    "mongoose": "5.1.0",
-    "os": "^0.1.2",
-    "socket.io": "2.1.1"
+    "mongoose": "5.1.0"
   },
   "devDependencies": {
     "concurrently": "3.5.0"
   },
-
   "scripts": {
     "start": "concurrently \"node server.js\" \"cd client && npm start\" \"mongod --quiet\"",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
-import MDBox from "components/MDBox";
-import PageLayout from "examples/LayoutContainers/PageLayout";
+import Box from "components/Box";
+import PageLayout from "objects/LayoutContainers/PageLayout";
 import Footer from "layouts/authentication/components/Footer";
 
 function CoverLayout({ coverHeight, image, children }) {
   return (
     <PageLayout>
-      <MDBox
+      <Box
         width="calc(100% - 2rem)"
         minHeight={coverHeight}
         borderRadius="xl"
@@ -27,13 +27,13 @@ function CoverLayout({ coverHeight, image, children }) {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MDBox mt={{ xs: -20, lg: -18 }} px={1} width="calc(100% - 2rem)" mx="auto">
+      <Box mt={{ xs: -20, lg: -18 }} px={1} width="calc(100% - 2rem)" mx="auto">
         <Grid container spacing={1} justifyContent="center">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             {children}
           </Grid>
         </Grid>
-      </MDBox>
+      </Box>
       <Footer />
     </PageLayout>
   );

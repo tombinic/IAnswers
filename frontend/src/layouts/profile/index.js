@@ -3,14 +3,14 @@ import Divider from "@mui/material/Divider";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-import Header from "layouts/profile/components/Header";
+import Box from "components/Box";
+import Typography from "components/Typography";
+import DashboardLayout from "objects/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "objects/DashboardNavbar";
+import Footer from "objects/Footer";
+import ProfileProfileInfoCard from "objects/Cards/ProfileInfoCard";
+import TopicCard from "objects/Cards/TopicCard";
+import Header from "layouts/profile/Header";
 import {forwardRef, React} from "react";
 
 const Overview = forwardRef(( { auth }, ref) => {
@@ -18,7 +18,7 @@ const Overview = forwardRef(( { auth }, ref) => {
   var topicsList = [];
   topicsList = (topics!=null)?topics.topics.map((element, index) =>
   <Grid item xs={12} md={6} xl={3}>
-    <DefaultProjectCard
+    <TopicCard
       image={(topics==null)?"":element.blob}
       label={element.topic}
       title={element.title}
@@ -35,11 +35,11 @@ const Overview = forwardRef(( { auth }, ref) => {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mb={2} />
+      <Box mb={2} />
       <Header auth={auth}>
-        <MDBox mt={5} mb={12}>
+        <Box mt={5} mb={12}>
             <Grid item xs={12} md={6} xl={12} sx={{ display: "flex" }}>
-              <ProfileInfoCard
+              <ProfileProfileInfoCard
                 title="profile information"
                 description={auth.motto}
                 info={{
@@ -52,22 +52,22 @@ const Overview = forwardRef(( { auth }, ref) => {
                 shadow={false}
               />
           </Grid>
-        </MDBox>
-        <MDBox pt={2} px={2} lineHeight={1.25}>
-          <MDTypography variant="h6" fontWeight="medium">
+        </Box>
+        <Box pt={2} px={2} lineHeight={1.25}>
+          <Typography variant="h6" fontWeight="medium">
             Topics
-          </MDTypography>
-          <MDBox mb={1}>
-            <MDTypography variant="button" color="text">
+          </Typography>
+          <Box mb={1}>
+            <Typography variant="button" color="text">
               All topics in our website!
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox p={2}>
+            </Typography>
+          </Box>
+        </Box>
+        <Box p={2}>
           <Grid container spacing={6}>
           {topicsList}
           </Grid>
-        </MDBox>
+        </Box>
       </Header>
       <Footer />
     </DashboardLayout>

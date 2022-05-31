@@ -1,7 +1,6 @@
-import Icon from "@mui/material/Icon";
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
+import Box from "components/Box";
+import Typography from "components/Typography";
+import Avatar from "components/Avatar";
 
 import LogoTopics from "assets/images/small-logos/topics.svg";
 import LogoTexts from "assets/images/small-logos/texts.svg";
@@ -12,21 +11,12 @@ export default function data() {
     const user = JSON.parse(localStorage.getItem('auth'));
     var userApi = "http://localhost:3005/api/" + user.username;
   const Project = ({ image, name }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" variant="rounded" />
-      <MDTypography display="block" variant="button" fontWeight="medium" ml={1} lineHeight={1}>
+    <Box display="flex" alignItems="center" lineHeight={1}>
+      <Avatar src={image} name={name} size="sm" variant="rounded" />
+      <Typography display="block" variant="button" fontWeight="medium" ml={1} lineHeight={1}>
         {name}
-      </MDTypography>
-    </MDBox>
-  );
-
-  const Progress = ({ color, value }) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-
-    </MDBox>
+      </Typography>
+    </Box>
   );
 
   return {
@@ -41,73 +31,73 @@ export default function data() {
       {
         project: <Project image={LogoTopics} name="Topics" />,
         desc: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             A complete list of topic in IAnswers
-          </MDTypography>
+          </Typography>
         ),
         status: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             online
-          </MDTypography>
+          </Typography>
         ),
         complete_url: (
-          <MDTypography component="a" href="http://localhost:3005/api/topics" target="_blank" variant="button" color="text" fontWeight="medium">
+          <Typography component="a" href="http://localhost:3005/api/topics" target="_blank" variant="button" color="text" fontWeight="medium">
             api/topics
-          </MDTypography>
+          </Typography>
         ),
       },
       {
         project: <Project image={LogoTitles} name="Topics" />,
         desc: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             A complete list of topics' titles in IAnswers
-          </MDTypography>
+          </Typography>
         ),
         status: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             online
-          </MDTypography>
+          </Typography>
         ),
         complete_url: (
-          <MDTypography component="a" href="http://localhost:3005/api/topics/titles" target="_blank" variant="button" color="text" fontWeight="medium">
+          <Typography component="a" href="http://localhost:3005/api/topics/titles" target="_blank" variant="button" color="text" fontWeight="medium">
             api/topics/titles
-          </MDTypography>
+          </Typography>
         ),
       },
       {
         project: <Project image={LogoTexts} name="Topics" />,
         desc: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             A complete list of topics' texts in IAnswers
-          </MDTypography>
+          </Typography>
         ),
         status: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             online
-          </MDTypography>
+          </Typography>
         ),
         complete_url: (
-          <MDTypography component="a" href="http://localhost:3005/api/topics/texts" target="_blank" variant="button" color="text" fontWeight="medium">
+          <Typography component="a" href="http://localhost:3005/api/topics/texts" target="_blank" variant="button" color="text" fontWeight="medium">
             api/topics/texts
-          </MDTypography>
+          </Typography>
         ),
       },
       {
         project: <Project image={LogoUser} name="User" />,
         desc: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             All information about you!
-          </MDTypography>
+          </Typography>
         ),
         status: (
-          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+          <Typography component="a" variant="caption" color="text" fontWeight="medium">
             online
-          </MDTypography>
+          </Typography>
         ),
         complete_url: (
-          <MDTypography component="a"  href={userApi} target="_blank" variant="button" color="text" fontWeight="medium">
+          <Typography component="a"  href={userApi} target="_blank" variant="button" color="text" fontWeight="medium">
             api/user
-          </MDTypography>
+          </Typography>
         ),
       },
     ],

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { sha3_512 } from 'js-sha3';
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+import Box from "components/Box";
+import Typography from "components/Typography";
+import Input from "components/Input";
+import Button from "components/Button";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 import bgImage from "assets/images/bg1.gif";
@@ -18,9 +18,12 @@ const Cover = forwardRef(( { setAuth }, ref) => {
   const [surname, setSurname] = useState(null);
   const [motto, setMotto] = useState(null);
 
+  console.log(username === null);
+
   const handleOnSignUp = (e) => {
-    if (pw === null || username === null || name === null || surname === null || motto === null) {
-      alert("Please insert all data");
+    if (pw === null || username === null || name === null || surname === null || motto === null ||
+        pw == "" || username == "" || name == "null" || surname == "" || motto == "") {
+        alert("Please insert all data");
     }
     else {
       let hash = sha3_512(pw);
@@ -81,7 +84,7 @@ const Cover = forwardRef(( { setAuth }, ref) => {
   return (
     <CoverLayout image={bgImage}>
       <Card>
-        <MDBox
+        <Box
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
@@ -92,39 +95,39 @@ const Cover = forwardRef(( { setAuth }, ref) => {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+          <Typography variant="h4" fontWeight="medium" color="white" mt={1}>
             Join us
-          </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
+          </Typography>
+          <Typography display="block" variant="button" color="white" my={1}>
             Enter your data to register
-          </MDTypography>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={1}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth onChange={(e) => handleNameChange(e)}/>
-            </MDBox>
-            <MDBox mb={1}>
-              <MDInput type="text" label="Surname" variant="standard" fullWidth onChange={(e) => handleSurnameChange(e)}/>
-            </MDBox>
-            <MDBox mb={1}>
-              <MDInput type="username" label="Username" variant="standard" fullWidth onChange={(e) => handleUsernameChange(e)}/>
-            </MDBox>
-            <MDBox mb={1}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth onChange={(e) => handlePasswordChange(e)}/>
-            </MDBox>
-            <MDBox mb={1}>
-              <MDInput type="text" label="Motto" variant="standard" fullWidth onChange={(e) => handleMottoChange(e)}/>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth onClick={(e) => handleOnSignUp(e)}>
+          </Typography>
+        </Box>
+        <Box pt={4} pb={3} px={3}>
+          <Box component="form" role="form">
+            <Box mb={1}>
+              <Input type="text" label="Name" variant="standard" fullWidth onChange={(e) => handleNameChange(e)}/>
+            </Box>
+            <Box mb={1}>
+              <Input type="text" label="Surname" variant="standard" fullWidth onChange={(e) => handleSurnameChange(e)}/>
+            </Box>
+            <Box mb={1}>
+              <Input type="username" label="Username" variant="standard" fullWidth onChange={(e) => handleUsernameChange(e)}/>
+            </Box>
+            <Box mb={1}>
+              <Input type="password" label="Password" variant="standard" fullWidth onChange={(e) => handlePasswordChange(e)}/>
+            </Box>
+            <Box mb={1}>
+              <Input type="text" label="Motto" variant="standard" fullWidth onChange={(e) => handleMottoChange(e)}/>
+            </Box>
+            <Box mt={4} mb={1}>
+              <Button variant="gradient" color="info" fullWidth onClick={(e) => handleOnSignUp(e)}>
                 sign in
-              </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
+              </Button>
+            </Box>
+            <Box mt={3} mb={1} textAlign="center">
+              <Typography variant="button" color="text">
                 Already have an account?{" "}
-                <MDTypography
+                <Typography
                   component={Link}
                   to="/authentication/sign-in"
                   variant="button"
@@ -133,11 +136,11 @@ const Cover = forwardRef(( { setAuth }, ref) => {
                   textGradient
                 >
                   Sign In
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-        </MDBox>
+                </Typography>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </Card>
     </CoverLayout>
   );
