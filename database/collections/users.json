@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "62629af2ed52bbc8b032f8dc"
+  },
+  "password": "b5123d080229e4775c61ba697caf6ece90d1478bc4f871664c654a83f274374948ff58269227d490ebd3eb599ad41aaf92c8c8e5ebdab515ed5a92418fdbad8b",
+  "name": "Nicolò",
+  "surname": "Tombini",
+  "motto": "I love qna with TensorFlow",
+  "username": "nicolotombini"
+},{
+  "_id": {
+    "$oid": "629397a02354b73911cfe4ea"
+  },
+  "password": "b5123d080229e4775c61ba697caf6ece90d1478bc4f871664c654a83f274374948ff58269227d490ebd3eb599ad41aaf92c8c8e5ebdab515ed5a92418fdbad8b",
+  "username": "cava200",
+  "name": "Francesco",
+  "surname": "Cavalieri",
+  "motto": "I love IAnswers"
+},{
+  "_id": {
+    "$oid": "6297492c69d7263acd8e898c"
+  },
+  "password": "b5123d080229e4775c61ba697caf6ece90d1478bc4f871664c654a83f274374948ff58269227d490ebd3eb599ad41aaf92c8c8e5ebdab515ed5a92418fdbad8b",
+  "username": "nick00",
+  "name": "Nicolò",
+  "surname": "Tombini",
+  "motto": "I love react"
+}]
