@@ -12,11 +12,7 @@ You can find informations about qna module at
 - [IAnswers](#ianswers)
   - [Table of contents](#table-of-contents)
   - :zap:[Quick Start](#quick-start-)
-    - [NumPy](https://numpy.org/)
-    - [Pandas](https://pandas.pydata.org/)
-    - [Matplotlib](https://matplotlib.org)
-    - [Shipy](https://docs.scipy.org)
-    - [Sklearn](https://scikit-learn.org/stable/)
+    - TensorFlow
   - :eyes:[Data exploration](#data-exploration-)
      - [Data visualization](#data-visualization)
      - [Dataset splitting](#dataset-splitting)
@@ -34,39 +30,24 @@ You can find informations about qna module at
 
 ## Quick start ⚡
 
-> Libraries that you need to install and import to build this software.
-- NumPy
+> The most important modules of TensorFlow to install are
+- @tensorflow-models/qna
 ```python
 import numpy as np
 ```
-- Pandas 
+- @tensorflow/tfjs-converter 
 ```python
 import pandas as pd
 ```
-- Matplotlib
+- @tensorflow/tfjs-core
 ```python
 import matplotlib.pyplot as plt
 ```
-- Shipy
+- @tensorflow/tfjs-node
 ```python
 from scipy import stats
 ```
-- Sklearn 
-```python
-from sklearn.feature_selection import SelectKBest
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import ConfusionMatrixDisplay 
-from sklearn.manifold import TSNE 
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import train_test_split
-from sklearn.feature_selection import mutual_info_classif
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
-```
+
 
 You can install directly all the libraries with requirements.txt file.
 ```
