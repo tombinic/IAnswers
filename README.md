@@ -1,5 +1,6 @@
 ![Immagine1](https://user-images.githubusercontent.com/91635053/176286088-0bee8a1b-1576-4e22-89af-6111f3be1597.png)
 
+👬 Thanks to [KavaTappi](https://github.com/KavaTappi)
 
 > As part of the Internet Technologies course project, it was decided to develop a platform regarding the concept of Q&A based on artificial intelligence. The following work was done with the TensorFlow.js library with a particular reference to the qna module.
 The entire source code is written in **JavaScript**.
