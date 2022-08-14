@@ -16,7 +16,7 @@ You can find informations about qna module at
   - :wrench:[Backend](#backend-)
      - [Modules](#modules)
      - [APIs](#apis)
-  - :arrow_forward:[Frontend](#frontend-)
+  - :eyes:[Frontend](#frontend-)
      - [Login](#login)
      - [Signup](#signup)
      - [Dashboard](#dashboard)
